@@ -262,7 +262,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02  KEY RESULTS", "试用期关键成果：三大块");
+  pageTitle(s, "02  成果展示", "试用期成果：三大块");
 
   s.addText("入职时没有数据、没有模型、没有平台。下面是三块各自的推进", {
     x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
@@ -336,104 +336,83 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 }
 
 // =====================================================================
-// S4b — 算法全景
+// S4b — 成果展示 · 行为识别
 // =====================================================================
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.1  OVERVIEW", "我负责的算法：两大块，一块延伸");
+  pageTitle(s, "02.1  成果展示", "行为识别：让项圈看懂狗在干什么");
 
-  card(s, { x: 0.6, y: 1.5, w: 12.13, h: 0.56, fill: PURPLE_LT });
+  // the four classes
+  const kinds = ["抓挠", "活动", "睡觉", "没戴项圈"];
+  kinds.forEach((k, i) => {
+    const x = 0.6 + i * 3.06;
+    card(s, { x, y: 1.62, w: 2.88, h: 1.06, fill: i === 0 ? PURPLE : PURPLE_XLT });
+    s.addText(k, {
+      x, y: 1.62, w: 2.88, h: 1.06, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 19, bold: true,
+      color: i === 0 ? WHITE : PURPLE_DK, align: "center", valign: "middle",
+    });
+  });
+
+  // the milestone
+  card(s, { x: 0.6, y: 2.92, w: 12.13, h: 0.6, fill: PURPLE_DK });
   s.addText("8.31 目标", {
-    x: 0.86, y: 1.62, w: 1.4, h: 0.32, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11, bold: true, color: PURPLE_DK, valign: "middle",
+    x: 0.88, y: 3.06, w: 1.4, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11, bold: true, color: ORANGE, valign: "middle",
   });
   s.addText("抓挠识别准确率 ≥ 85%", {
-    x: 2.4, y: 1.62, w: 3.2, h: 0.32, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12.5, color: INK, valign: "middle",
+    x: 2.4, y: 3.06, w: 3.2, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 13, color: WHITE, valign: "middle",
   });
   s.addShape(pres.ShapeType.roundRect, {
-    x: 5.7, y: 1.62, w: 0.86, h: 0.32, rectRadius: 0.07, fill: { color: ORANGE },
+    x: 5.72, y: 3.06, w: 0.86, h: 0.32, rectRadius: 0.07, fill: { color: ORANGE },
   });
   s.addText("已达成", {
-    x: 5.7, y: 1.62, w: 0.86, h: 0.32, isTextBox: true, margin: 0,
+    x: 5.72, y: 3.06, w: 0.86, h: 0.32, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11, bold: true, color: PURPLE_DK, align: "center", valign: "middle",
   });
   s.addText("EVT → DVT 阶段评审节点，算法侧均按期完成对接", {
-    x: 6.9, y: 1.62, w: 5.6, h: 0.32, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11, color: MUTED, valign: "middle",
+    x: 6.9, y: 3.06, w: 5.6, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11, color: PURPLE_LT, valign: "middle",
   });
 
-  const cols = [
-    ["行为识别", "主线", ["抓挠", "活动", "睡觉", "没戴项圈"],
-      "从项圈传感器数据判断狗在干什么", PURPLE_DK, true],
-    ["皮肤健康评估", "主线", ["规则版", "AI 版"],
-      "用行为数据判断皮肤状况，是产品最终要的结论", PURPLE_DK, true],
-    ["图像识别", "延伸", ["皮肤照片", "口腔牙齿"],
-      "用户上传照片时作为补充；口腔牙齿检测是额外做的验证", PURPLE_XLT, false],
+  // how it is verified
+  s.addText("模型能不能用，看它在没见过的狗身上掉多少", {
+    x: 0.62, y: 3.76, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 13, bold: true, color: PURPLE_DK,
+  });
+
+  const steps = [
+    ["第一版", "3 只狗训练", "这 3 只约 85%"],
+    ["稳定版 v2", "补入第 4 只重训", "4 只都到 85%，误报变少"],
+    ["怎么验证", "来一只单独测，来一批整批测", "换没见过的狗，看还准不准"],
   ];
-
-  cols.forEach((c, i) => {
+  steps.forEach((st, i) => {
     const x = 0.6 + i * 4.11;
-    const dark = c[5];
-    card(s, { x, y: 2.22, w: 3.91, h: 3.22, fill: c[4] });
-    s.addShape(pres.ShapeType.roundRect, {
-      x: x + 2.86, y: 2.44, w: 0.82, h: 0.3, rectRadius: 0.07,
-      fill: { color: dark ? ORANGE : PURPLE_MD },
+    const hot = i === 2;
+    card(s, { x, y: 4.2, w: 3.91, h: 1.9, fill: hot ? PURPLE : PURPLE_XLT });
+    s.addText(st[0], {
+      x: x + 0.28, y: 4.42, w: 3.3, h: 0.32, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 14, bold: true, color: hot ? WHITE : PURPLE_DK,
     });
-    s.addText(c[1], {
-      x: x + 2.86, y: 2.44, w: 0.82, h: 0.3, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 10, bold: true,
-      color: dark ? PURPLE_DK : WHITE, align: "center", valign: "middle",
+    s.addText(st[1], {
+      x: x + 0.29, y: 4.8, w: 3.3, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 10.5, color: hot ? PURPLE_LT : MUTED,
     });
-    s.addText(c[0], {
-      x: x + 0.3, y: 2.42, w: 2.5, h: 0.36, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 16, bold: true, color: dark ? WHITE : PURPLE_DK,
-    });
-    c[2].forEach((t, k) => {
-      const ty = 3.0 + k * 0.48;
-      s.addShape(pres.ShapeType.roundRect, {
-        x: x + 0.3, y: ty, w: 3.32, h: 0.4, rectRadius: 0.07,
-        fill: { color: dark ? PURPLE : WHITE },
-      });
-      s.addText(t, {
-        x: x + 0.3, y: ty, w: 3.32, h: 0.4, isTextBox: true, margin: 0,
-        fontFace: F, fontSize: 12.5, bold: true,
-        color: dark ? WHITE : PURPLE_DK, align: "center", valign: "middle",
-      });
-    });
-    s.addText(c[3], {
-      x: x + 0.3, y: 5.0, w: 3.32, h: 0.4, isTextBox: true, margin: 0, valign: "top",
-      fontFace: F, fontSize: 10, color: dark ? PURPLE_LT : MUTED, lineSpacingMultiple: 1.2,
+    s.addText(st[2], {
+      x: x + 0.28, y: 5.2, w: 3.36, h: 0.66, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 12, bold: true, color: hot ? ORANGE : PURPLE_DK,
+      lineSpacingMultiple: 1.25,
     });
   });
 
-  // how the pieces feed each other
-  card(s, { x: 0.6, y: 5.66, w: 12.13, h: 1.02, fill: PURPLE_XLT });
-  const flow = ["项圈数据", "行为识别", "皮肤评估"];
-  flow.forEach((t, i) => {
-    const x = 1.0 + i * 2.1;
-    s.addShape(pres.ShapeType.roundRect, {
-      x, y: 5.9, w: 1.7, h: 0.5, rectRadius: 0.08, fill: { color: PURPLE },
-    });
-    s.addText(t, {
-      x, y: 5.9, w: 1.7, h: 0.5, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11.5, bold: true, color: WHITE, align: "center", valign: "middle",
-    });
-    if (i < flow.length - 1) {
-      s.addText("→", {
-        x: x + 1.7, y: 5.9, w: 0.4, h: 0.5, isTextBox: true, margin: 0,
-        fontFace: F, fontSize: 13, bold: true, color: PURPLE_DK, align: "center", valign: "middle",
-      });
-    }
+  s.addText("下一步：狗场先加 6 只（1-2 周）批量验证，之后按批次继续扩。以上为算法自测结果，尚未经测试同事验收。", {
+    x: 0.62, y: 6.3, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 10.5, color: MUTED,
   });
-  s.addText("用户问答、用户上传照片可以加进来一起判断，\n但默认没有 —— 多数情况只靠行为数据", {
-    x: 7.3, y: 5.8, w: 5.2, h: 0.7, isTextBox: true, margin: 0, valign: "middle",
-    fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.2,
-  });
-
   pageNum(s, 5);
-  s.addNotes("这一页先把范围说清楚：我负责的是两大块 —— 行为识别和皮肤健康评估，行为识别的结果是皮肤评估的输入。图像识别是延伸出来的一块，用户上传照片时作为补充，口腔牙齿检测是额外做的可行性验证。");
+  s.addNotes("行为识别能分辨四类：抓挠、活动、睡觉、没戴项圈。公司定的 8.31 目标是抓挠准确率不低于 85%，已达成。验证方法是拿没见过的狗测 —— 3 只狗训出来的模型在这 3 只上约 85%，换一只没见过的会掉，把它补进去重训，4 只又回到 85%。所以模型现在是靠见过才准，这也是下一步要加狗的原因。");
 }
 
 // =====================================================================
@@ -442,7 +421,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.2  SKIN", "成果一：皮肤评估，两条路一起走");
+  pageTitle(s, "02.2  成果展示", "皮肤评估：两条路一起走");
 
   // the two tracks
   const tracks = [
@@ -478,7 +457,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 
   const stages = [
     ["第一阶段", "行为数据", "→", "皮肤等级", PURPLE],
-    ["第二阶段", "＋ 用户问答（可选 ＋ 用户照片）", "→", "综合评估", ORANGE_DK],
+    ["第二阶段", "＋ 用户问答，若有照片再加图像识别", "→", "综合评估", ORANGE_DK],
   ];
   stages.forEach((st, i) => {
     const y = 4.46 + i * 0.9;
@@ -505,68 +484,13 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
 
-  s.addText("用户问答和照片默认是没有的，所以多数情况只靠第一阶段的行为数据判断。", {
-    x: 0.62, y: 6.36, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 10.5, color: MUTED,
+  s.addText("图像识别是延伸出来的一块：用户上传照片时参与第二阶段判断；口腔牙齿检测是额外做的验证。\n用户问答和照片默认没有，所以多数情况只靠第一阶段的行为数据。", {
+    x: 0.62, y: 6.28, w: 12.0, h: 0.62, isTextBox: true, margin: 0, valign: "top",
+    fontFace: F, fontSize: 10.5, color: MUTED, lineSpacingMultiple: 1.3,
   });
 
   pageNum(s, 6);
   s.addNotes("两条路一起走的原因：规则版是 PM 和兽医定的，解释性好，兽医愿意核对，但上限受限于人能想到的规则；AI 版是把业务规则和兽医临床经验提炼成特征让模型学，上限更高，但要真实病例数据才能训好，现在只用合成数据验证了方案可行。AI 版分两阶段：先用行为数据出一个皮肤等级，如果用户回答了问题、上传了照片，第二阶段再综合判断。但用户互动默认没有，所以多数时候是第一阶段在起作用。");
-}
-
-// =====================================================================
-// S6b — 怎么把它做得更好
-// =====================================================================
-{
-  const s = pres.addSlide();
-  lightBg(s);
-  pageTitle(s, "02.3  HOW", "成果二：要做得更好，关键是这三件事");
-
-  const items = [
-    ["01", "样本要更多", "现在只有 4 只狗", [
-      "个体越多，模型换一只没见过的狗才稳",
-      "狗场先加 6 只，之后按批次继续扩",
-    ], PURPLE_DK, true],
-    ["02", "标注要人工审核", "但会越来越省", [
-      "模型越准，AI 预标越准，人只需核对",
-      "同样的数据量，人工投入随时间下降",
-    ], PURPLE_XLT, false],
-    ["03", "数据够了换更好的模型", "现在的数据量还不够", [
-      "数据量少，传统方法更稳、更省",
-      "数据上来后可以上深度学习，上限更高",
-    ], PURPLE_XLT, false],
-  ];
-
-  items.forEach((it, i) => {
-    const x = 0.6 + i * 4.11;
-    const dark = it[5];
-    card(s, { x, y: 1.7, w: 3.91, h: 3.24, fill: it[4] });
-    badge(s, x + 0.28, 1.94, 0.5, it[0], dark ? ORANGE : PURPLE_MD, WHITE, 12);
-    s.addText(it[1], {
-      x: x + 0.9, y: 1.98, w: 2.9, h: 0.32, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 14.5, bold: true, color: dark ? WHITE : PURPLE_DK,
-    });
-    s.addText(it[2], {
-      x: x + 0.3, y: 2.58, w: 3.32, h: 0.3, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11, color: dark ? ORANGE : MUTED,
-    });
-    s.addText(it[3].map((b, k) => ({
-      text: b, options: { bullet: true, breakLine: k !== it[3].length - 1 },
-    })), {
-      x: x + 0.3, y: 3.0, w: 3.32, h: 1.7, isTextBox: true, margin: 0, valign: "top",
-      fontFace: F, fontSize: 11, color: dark ? WHITE : INK,
-      paraSpaceAfter: 6, lineSpacingMultiple: 1.2,
-    });
-  });
-
-  card(s, { x: 0.6, y: 5.2, w: 12.13, h: 1.0, fill: PURPLE_LT });
-  s.addText("影棚 2 → 4 只，龙岗狗场 6 只已谈妥，长远按 30 → 50 → 70 → 100 → 150 只分阶段扩大。\n三件事是连着的：狗多了数据才够，AI 预标准了人工才省，省下来的人力才能标更多数据、支撑更好的模型。", {
-    x: 0.9, y: 5.36, w: 11.5, h: 0.7, isTextBox: true, margin: 0, valign: "middle",
-    fontFace: F, fontSize: 12, color: INK, lineSpacingMultiple: 1.25,
-  });
-
-  pageNum(s, 7);
-  s.addNotes("这一页讲的是怎么继续把它做好。三件事是互相咬合的：样本个体不够，模型换新狗就不稳；标注要人工审核，但模型越准 AI 预标越准，人工只做核对，投入会越来越省；省下来的人力能标更多数据，数据够了就能换更好的模型，上限更高。现在数据量还不适合上深度学习，传统方法反而更稳。");
 }
 
 // =====================================================================
@@ -575,7 +499,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.4  PLATFORM", "成果三：AI 先干粗活，人只做把关");
+  pageTitle(s, "02.3  成果展示", "算法平台：AI 先干粗活，人只做把关");
 
   s.addText("一只狗一天录 24 段、每段 1 小时，早期只能靠人从头看到尾", {
     x: 0.62, y: 1.42, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
@@ -655,12 +579,12 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     s.addShape(pres.ShapeType.roundRect, {
       x: tx, y: ty, w: tw, h: th, rectRadius: 0.06, fill: { color: PURPLE_DK },
     });
-    if (fs.existsSync(m[0])) fitImage(s, m[0], tx, ty, tw, th, { slide: 14 + i, tooltip: "点击放大" });
+    if (fs.existsSync(m[0])) fitImage(s, m[0], tx, ty, tw, th, { slide: 13 + i, tooltip: "点击放大" });
     // transparent hit area so the whole thumbnail is clickable, not just the image
     s.addShape(pres.ShapeType.roundRect, {
       x: tx, y: ty, w: tw, h: th, rectRadius: 0.06,
       fill: { color: WHITE, transparency: 100 }, line: { type: "none" },
-      hyperlink: { slide: 14 + i, tooltip: "点击放大" },
+      hyperlink: { slide: 13 + i, tooltip: "点击放大" },
     });
     s.addText("点击放大", {
       x: x + 1.84, y: 6.96, w: 3.9, h: 0.24, isTextBox: true, margin: 0,
@@ -676,7 +600,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
 
-  pageNum(s, 8);
+  pageNum(s, 7);
   s.addNotes("现场点开视频播放，另外两项在浏览器里现场演示。重点讲两个机制：AI 预标注让人从「从头标」变成「审核修正」；疑似片段召回把模型最不确定的样本主动推给人工，这两条是标注效率和数据质量的关键。播放控制在 1-2 分钟。");
 }
 
@@ -742,7 +666,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 2.4, y: 5.64, w: 10.1, h: 0.7, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11.5, color: WHITE, valign: "middle", lineSpacingMultiple: 1.25,
   });
-  pageNum(s, 9);
+  pageNum(s, 8);
   s.addNotes("持续产出不是靠某一次冲刺，而是稳定的节奏。16周周报、进度从45%到87%，每周都有实质推进。");
 }
 
@@ -778,7 +702,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
     });
   });
-  pageNum(s, 10);
+  pageNum(s, 9);
   s.addNotes("这五条是我试用期最重要的方法论沉淀，也是我认为可以持续复用到后续工作中的东西。");
 }
 
@@ -829,7 +753,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 10.5, color: INK, valign: "middle",
     });
   });
-  pageNum(s, 11);
+  pageNum(s, 10);
   s.addNotes("这一页是我对自己短板的判断。泛化能力是当前最需要解决的问题，其他三项也都有明确路径。");
 }
 
@@ -839,68 +763,56 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "05  NEXT STEPS", "下一步：与团队共同达成目标");
+  pageTitle(s, "05  NEXT STEPS", "下一步：要做得更好，关键是这三件事");
 
-  const plans = [
-    ["近期", "1-2 个月", [
-      "推动龙岗狗场正式采集，先补 6 只狗并完成一轮检验",
-      "标注平台上线 AI 自动标注，进一步提高核对效率",
-      "皮肤评分标准持续校准并推上线，解决误报问题",
-      "和产品、兽医对齐行为定义与松动判定标准",
-    ], PURPLE],
-    ["中期", "3-6 个月", [
-      "狗的数量上来后，模型换新狗也稳定，具备推给用户的条件",
-      "皮肤评估用真实病例再训练一轮，并上线验证",
-      "补齐松动检测，形成完整的全天佩戴时长统计",
-      "采集规模按 30 → 50 → 70 只分阶段扩大",
-    ], PURPLE_MD],
-    ["长期", "持续投入", [
-      "把采集、标注、训练、上线这套流程固化成标准做法",
-      "让算法从「能认出行为」走向「能给出可信的健康结论」",
-      "建立竞品对标，摸清我们的能力边界和优势在哪",
-      "团队变大后，把算法工作做到可协同、可交接",
-    ], ORANGE_DK],
+  const items = [
+    ["01", "样本要更多", "现在只有 4 只狗", "个体越多，模型换一只没见过的狗才稳",
+      "狗场先加 6 只，之后按批次继续扩", PURPLE_DK, true],
+    ["02", "标注要人工审核", "但会越来越省", "模型越准，AI 预标越准，人只需核对",
+      "平台上线 AI 自动标注，把人力省下来", PURPLE_XLT, false],
+    ["03", "换更好的模型", "现在的数据量还不够", "数据少时传统方法更稳、更省",
+      "数据上来后上深度学习，上限更高", PURPLE_XLT, false],
   ];
 
-  plans.forEach((p, i) => {
+  items.forEach((it, i) => {
     const x = 0.6 + i * 4.11;
-    card(s, { x, y: 1.7, w: 3.91, h: 3.34, fill: i === 0 ? PURPLE_DK : PURPLE_XLT });
-    const isDark = i === 0;
+    const dark = it[6];
+    card(s, { x, y: 1.66, w: 3.91, h: 3.5, fill: it[5] });
+    badge(s, x + 0.28, 1.9, 0.5, it[0], dark ? ORANGE : PURPLE_MD, WHITE, 12);
+    s.addText(it[1], {
+      x: x + 0.9, y: 1.94, w: 2.9, h: 0.32, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 14.5, bold: true, color: dark ? WHITE : PURPLE_DK,
+    });
+    s.addText(it[2], {
+      x: x + 0.3, y: 2.54, w: 3.32, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11, color: dark ? ORANGE : MUTED,
+    });
+    s.addText(it[3], {
+      x: x + 0.3, y: 2.94, w: 3.32, h: 0.7, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 11, color: dark ? WHITE : INK, lineSpacingMultiple: 1.25,
+    });
     s.addShape(pres.ShapeType.roundRect, {
-      x: x + 0.28, y: 1.96, w: 1.0, h: 0.36, rectRadius: 0.08, fill: { color: p[3] },
+      x: x + 0.3, y: 3.86, w: 3.32, h: 1.06, rectRadius: 0.08,
+      fill: { color: dark ? PURPLE : WHITE },
     });
-    s.addText(p[0], {
-      x: x + 0.28, y: 1.96, w: 1.0, h: 0.36, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 12, bold: true, color: onColor(p[3]), align: "center", valign: "middle",
-    });
-    s.addText(p[1], {
-      x: x + 1.42, y: 2.02, w: 2.2, h: 0.26, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 10.5, color: isDark ? PURPLE_LT : MUTED,
-    });
-    s.addText(p[2].map((t, k) => ({
-      text: t, options: { bullet: true, breakLine: k !== p[2].length - 1 },
-    })), {
-      x: x + 0.3, y: 2.5, w: 3.32, h: 2.4, isTextBox: true, margin: 0, valign: "top",
-      fontFace: F, fontSize: 10.5, color: isDark ? WHITE : INK,
-      paraSpaceAfter: 9, lineSpacingMultiple: 1.25,
+    s.addText(it[4], {
+      x: x + 0.44, y: 3.86, w: 3.04, h: 1.06, isTextBox: true, margin: 0, valign: "middle",
+      fontFace: F, fontSize: 11, bold: true, color: dark ? WHITE : PURPLE_DK,
+      lineSpacingMultiple: 1.25,
     });
   });
 
-  card(s, { x: 0.6, y: 5.32, w: 12.13, h: 1.34, fill: PURPLE_DK });
-  s.addText("共同目标", {
-    x: 0.9, y: 5.5, w: 2.0, h: 0.26, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11, bold: true, color: ORANGE,
+  card(s, { x: 0.6, y: 5.44, w: 12.13, h: 1.2, fill: PURPLE_LT });
+  s.addText("三件事是连着的", {
+    x: 0.9, y: 5.62, w: 2.6, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 12, bold: true, color: PURPLE_DK,
   });
-  s.addText("让算法从「跑得通」走向「靠得住」—— 成为产品可以放心依赖的健康判断能力", {
-    x: 0.92, y: 5.8, w: 11.4, h: 0.36, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 15.5, bold: true, color: WHITE,
+  s.addText("狗多了数据才够，AI 预标准了人工才省，省下来的人力才能标更多数据、支撑更好的模型。\n目标：让算法从「能认出行为」走向「能给出可信的健康结论」。", {
+    x: 3.6, y: 5.58, w: 8.9, h: 0.9, isTextBox: true, margin: 0, valign: "middle",
+    fontFace: F, fontSize: 11.5, color: INK, lineSpacingMultiple: 1.3,
   });
-  s.addText("这需要数据、算法、业务定义三件事同步推进，也需要产品、兽医、后端、硬件持续配合，我会主动担起推动这条链路的责任。", {
-    x: 0.92, y: 6.22, w: 11.4, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 10.5, color: PURPLE_LT,
-  });
-  pageNum(s, 12);
-  s.addNotes("下一步我最想解决的是泛化能力问题，这决定了产品能不能面向所有用户的狗。");
+  pageNum(s, 11);
+  s.addNotes("下一步就是这三件事，而且是连着的：狗多了数据才够；模型越准 AI 预标越准，人工审核越来越省；省下来的人力能标更多数据，数据够了就能上深度学习，上限更高。现在数据量还不适合上深度学习，传统方法反而更稳。");
 }
 
 // =====================================================================
@@ -960,12 +872,12 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
   s.addShape(pres.ShapeType.roundRect, {
     x: 11.7, y: 0.26, w: 1.13, h: 0.36, rectRadius: 0.08,
-    fill: { color: PURPLE }, hyperlink: { slide: 8, tooltip: "返回演示页" },
+    fill: { color: PURPLE }, hyperlink: { slide: 7, tooltip: "返回演示页" },
   });
   s.addText("← 返回", {
     x: 11.7, y: 0.26, w: 1.13, h: 0.36, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11, bold: true, color: WHITE,
-    align: "center", valign: "middle", hyperlink: { slide: 8, tooltip: "返回演示页" },
+    align: "center", valign: "middle", hyperlink: { slide: 7, tooltip: "返回演示页" },
   });
   if (fs.existsSync(img)) fitImage(s, img, 0.4, 0.82, 12.53, 6.4);
 });
