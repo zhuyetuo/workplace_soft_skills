@@ -676,34 +676,53 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "04  GROWTH", "个人成长：这几个月我想明白的五件事");
+  pageTitle(s, "04  GROWTH", "个人成长：想明白的五件事");
 
-  const growth = [
-    ["数据质量比数量更重要", "把标注时拿不准的片段先剔掉再拿去训练 —— 留着反而会教错模型，比没这条数据更糟。", ORANGE_DK],
-    ["让模型告诉我该补什么数据", "把 AI 没把握的片段挑给人看：人说「是」的是它漏掉的，人说「不是」的是它认错的，两种都最值得再训练。", PURPLE],
-    ["先分清是技术问题还是定义问题", "「活动」和「睡觉」老是混，根子在于这两件事本身就没定义清楚，不是模型不行。得先把标准对齐。", PURPLE_MD],
-    ["自己发现的问题要主动说", "自查时发现造的测试数据有漏洞，会让分数虚高。主动把分数改低并写进文档 —— 宁可报低，不留隐患。", PURPLE],
-    ["该放弃的要早点放弃", "网络传视频方案验证下来延迟不稳定，果断改回本地录制；有争议的地方靠实测下结论，不靠猜。", ORANGE_DK],
+  s.addText("以前的做法", {
+    x: 5.9, y: 1.5, w: 2.9, h: 0.28, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 10.5, color: MUTED,
+  });
+  s.addText("现在的做法", {
+    x: 9.5, y: 1.5, w: 3.2, h: 0.28, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 10.5, bold: true, color: PURPLE_DK,
+  });
+
+  const rows = [
+    ["数据质量 > 数量", "有数据就都拿去训练", "拿不准的先剔掉"],
+    ["让模型告诉我补什么数据", "盲目加数据", "看 AI 没把握的地方"],
+    ["分清技术问题还是定义问题", "一直调模型", "先把标准对齐"],
+    ["自己发现的问题要主动说", "分数好看就行", "宁可报低，不留隐患"],
+    ["该放弃的要早点放弃", "硬撑到底", "实测之后就换路"],
   ];
 
-  growth.forEach((g, i) => {
-    const col = i % 2, row = Math.floor(i / 2);
-    const x = 0.6 + col * 6.19;
-    const y = 1.66 + row * 1.72;
-    const w = i === 4 ? 12.13 : 5.94;
-    card(s, { x, y, w, h: 1.54, fill: PURPLE_XLT });
-    badge(s, x + 0.26, y + 0.22, 0.46, String(i + 1), g[2], WHITE, 12);
-    s.addText(g[0], {
-      x: x + 0.86, y: y + 0.26, w: w - 1.2, h: 0.3, isTextBox: true, margin: 0,
+  rows.forEach((r, i) => {
+    const y = 1.88 + i * 0.98;
+    card(s, { x: 0.6, y, w: 12.13, h: 0.84, fill: PURPLE_XLT });
+    badge(s, 0.86, y + 0.2, 0.44, String(i + 1), PURPLE_MD, WHITE, 11);
+    s.addText(r[0], {
+      x: 1.5, y: y + 0.2, w: 4.3, h: 0.44, isTextBox: true, margin: 0, valign: "middle",
       fontFace: F, fontSize: 13.5, bold: true, color: PURPLE_DK,
     });
-    s.addText(g[1], {
-      x: x + 0.3, y: y + 0.74, w: w - 0.6, h: 0.68, isTextBox: true, margin: 0, valign: "top",
-      fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
+    s.addText("×  " + r[1], {
+      x: 5.9, y: y + 0.2, w: 2.9, h: 0.44, isTextBox: true, margin: 0, valign: "middle",
+      fontFace: F, fontSize: 11, color: MUTED,
+    });
+    s.addText("→", {
+      x: 8.9, y: y + 0.2, w: 0.5, h: 0.44, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 12, bold: true, color: PURPLE_MD,
+      align: "center", valign: "middle",
+    });
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 9.5, y: y + 0.14, w: 3.0, h: 0.56, rectRadius: 0.08, fill: { color: WHITE },
+    });
+    s.addText(r[2], {
+      x: 9.68, y: y + 0.14, w: 2.7, h: 0.56, isTextBox: true, margin: 0, valign: "middle",
+      fontFace: F, fontSize: 11.5, bold: true, color: PURPLE_DK,
     });
   });
+
   pageNum(s, 9);
-  s.addNotes("这五条是我试用期最重要的方法论沉淀，也是我认为可以持续复用到后续工作中的东西。");
+  s.addNotes("这五件事是我这几个月真正想明白的。可以挑第一条和第四条展开：训练集里拿不准的片段要剔掉，留着反而教错模型；还有自查发现造的测试数据有漏洞会让分数虚高，我主动把分数改低并写进文档 —— 宁可报低，不留隐患。");
 }
 
 // =====================================================================
