@@ -6,3 +6,9 @@
 
 图片按原始比例居中嵌入，不会拉伸变形；缺图时降级为「现场演示」面板。
 scratch.mp4 是标注审核工作台录屏，现场演示直接播放即可。
+
+生成方式：
+  node 生成脚本.js
+  python3 postbuild.py "转正述职报告-朱业拓.pptx" media/poster.png
+
+postbuild 用来把 pptxgenjs 的灰色播放占位图换成 poster.png（视频真实画面）。

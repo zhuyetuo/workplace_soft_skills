@@ -624,7 +624,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
 
   const demos = [
-    ["media/scratch.png", "抓挠检出与人工确认", "三路画面同步回看，模型预标片段标注置信度 88%，疑似片段 37% 单独列出待确认"],
+    ["media/scratch.png", "抓挠检出与人工确认", "三路画面同步回看，模型预标片段置信度 88%，疑似片段 37% 待确认（下页视频演示）"],
     ["media/platform.png", "皮肤评估每日跟踪", "每犬每日自动跑出有效佩戴、抓挠统计、C 值与 S 总分，AI 版与人工版并列对比"],
     ["media/tartar.png", "口腔牙齿检测", "图片 / 视频 / 摄像头实时三种模式，正常与异常识别置信度 0.91 / 0.92"],
   ];
@@ -667,6 +667,64 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
   pageNum(s, 9);
   s.addNotes("这一页配合现场演示：先放抓挠检测的实际效果，再演示标注平台的操作，最后展示口腔牙结石识别。演示时长控制在 2 分钟内。");
+}
+
+// =====================================================================
+// S9b — 视频演示：抓挠检出与人工确认（视频内嵌，放映时点击播放）
+// =====================================================================
+{
+  const s = pres.addSlide();
+  lightBg(s);
+  pageTitle(s, "02.7  LIVE DEMO", "演示：抓挠检出与人工确认");
+
+  const vw = 8.3, vh = 8.3 / 2.11;
+  const vx = 0.6, vy = 1.82;
+  s.addShape(pres.ShapeType.roundRect, {
+    x: vx - 0.06, y: vy - 0.06, w: vw + 0.12, h: vh + 0.12, rectRadius: 0.08,
+    fill: { color: PURPLE_DK },
+  });
+  if (fs.existsSync("media/scratch.mp4")) {
+    s.addMedia({ type: "video", path: "media/scratch.mp4", x: vx, y: vy, w: vw, h: vh });
+  } else {
+    fitImage(s, "media/scratch.png", vx, vy, vw, vh);
+  }
+  s.addText("放映时点击画面播放；也可双击后在播放器中全屏", {
+    x: vx, y: vy + vh + 0.16, w: vw, h: 0.26, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 9.5, color: MUTED,
+  });
+
+  s.addText("这段演示里请看四处", {
+    x: 9.16, y: 1.86, w: 3.6, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 14, bold: true, color: PURPLE_DK,
+  });
+
+  const pts = [
+    ["三路画面同步", "三个机位与 IMU 波形共用一条时间轴，可逐帧回看同一时刻"],
+    ["AI 预标片段", "模型标出 11.7 秒抓挠，置信度 88%，来源标记「AI 待确认」"],
+    ["疑似片段召回", "模型低置信 37% 的片段被单独挑出，等人工裁决"],
+    ["审核动作", "认领并修改 / 整份通过 / 抓挠确认无误，支撑多人协同"],
+  ];
+  pts.forEach((p, i) => {
+    const y = 2.34 + i * 1.06;
+    card(s, { x: 9.14, y, w: 3.59, h: 0.94, fill: i === 2 ? PURPLE_LT : PURPLE_XLT });
+    badge(s, 9.34, y + 0.26, 0.42, String(i + 1), i === 2 ? PURPLE : PURPLE_MD, WHITE, 11);
+    s.addText(p[0], {
+      x: 9.88, y: y + 0.12, w: 2.7, h: 0.26, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11.5, bold: true, color: PURPLE_DK,
+    });
+    s.addText(p[1], {
+      x: 9.88, y: y + 0.42, w: 2.7, h: 0.44, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 9, color: INK, lineSpacingMultiple: 1.2,
+    });
+  });
+
+  s.addText("模型先标，人工只做确认与修正；模型最不确定的片段被主动推到人工面前 —— 人力花在最有价值的地方。", {
+    x: 0.62, y: 6.6, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 10.5, color: MUTED,
+  });
+
+  pageNum(s, 10);
+  s.addNotes("现场点开视频播放。重点讲两个机制：AI 预标注让人从「从头标」变成「审核修正」；疑似片段召回把模型最不确定的样本主动推给人工，这两条是标注效率和数据质量的关键。播放控制在 1-2 分钟。");
 }
 
 // =====================================================================
@@ -736,7 +794,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 7.09, y: 5.44, w: 5.4, h: 0.9, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
   });
-  pageNum(s, 10);
+  pageNum(s, 11);
   s.addNotes("数据资源不能被动等待。从模拟数据起步，到影棚落地，再到狗场合作谈成，这条线是我主动推动的。");
 }
 
@@ -795,7 +853,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 9, color: PURPLE_LT, lineSpacingMultiple: 1.2,
     });
   });
-  pageNum(s, 11);
+  pageNum(s, 12);
   s.addNotes("算法虽然只有我一个人，但工作是高度依赖协作的。我也会主动提出自己的判断，而不只是执行。");
 }
 
@@ -861,7 +919,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 2.4, y: 5.64, w: 10.1, h: 0.7, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11.5, color: WHITE, valign: "middle", lineSpacingMultiple: 1.25,
   });
-  pageNum(s, 12);
+  pageNum(s, 13);
   s.addNotes("持续产出不是靠某一次冲刺，而是稳定的节奏。16周周报、进度从45%到87%，每周都有实质推进。");
 }
 
@@ -897,7 +955,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
     });
   });
-  pageNum(s, 13);
+  pageNum(s, 14);
   s.addNotes("这五条是我试用期最重要的方法论沉淀，也是我认为可以持续复用到后续工作中的东西。");
 }
 
@@ -947,7 +1005,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 10, color: INK, valign: "middle", lineSpacingMultiple: 1.2,
     });
   });
-  pageNum(s, 14);
+  pageNum(s, 15);
   s.addNotes("这一页是我对自己短板的判断。泛化能力是当前最需要解决的问题，其他三项也都有明确路径。");
 }
 
@@ -1017,7 +1075,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.92, y: 6.22, w: 11.4, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: PURPLE_LT,
   });
-  pageNum(s, 15);
+  pageNum(s, 16);
   s.addNotes("下一步我最想解决的是泛化能力问题，这决定了产品能不能面向所有用户的狗。");
 }
 
