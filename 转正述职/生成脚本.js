@@ -171,8 +171,8 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 
   items.forEach((it, i) => {
     const y = 1.72 + i * 1.03;
-    card(s, { x: 0.6, y, w: 12.13, h: 0.86, fill: i === 1 ? PURPLE_LT : PURPLE_XLT });
-    badge(s, 0.86, y + 0.15, 0.56, it[0], i === 1 ? PURPLE : PURPLE_MD, WHITE, 15);
+    card(s, { x: 0.6, y, w: 12.13, h: 0.86, fill: PURPLE_XLT });
+    badge(s, 0.86, y + 0.15, 0.56, it[0], PURPLE_MD, WHITE, 15);
     s.addText(it[1], {
       x: 1.66, y: y + 0.16, w: 4.2, h: 0.32, isTextBox: true, margin: 0,
       fontFace: F, fontSize: 15, bold: true, color: PURPLE_DK,
