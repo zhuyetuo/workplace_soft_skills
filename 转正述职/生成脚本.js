@@ -810,7 +810,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.7  COLLABORATION", "成果六：推动跨团队把事情落地");
+  pageTitle(s, "02.7  COLLABORATION", "成果六：把事情当自己的事推着走");
 
   const collab = [
     ["后端", "配合调整数据存储方式；交付算法服务，后端完成部署，全链路跑通", PURPLE],
@@ -820,9 +820,14 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["测试 / 项目", "预留测试接口；推动算法在 ONES 单独立项", PURPLE],
   ];
 
+  s.addText("算法岗只有我一人，很多事没人催也没人推 —— 能推到哪一步，取决于我主动做到哪一步", {
+    x: 0.62, y: 1.42, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11.5, color: MUTED,
+  });
+
   collab.forEach((c, i) => {
-    const y = 1.7 + i * 0.86;
-    card(s, { x: 0.6, y, w: 7.9, h: 0.74, fill: PURPLE_XLT });
+    const y = 1.86 + i * 0.84;
+    card(s, { x: 0.6, y, w: 7.9, h: 0.72, fill: PURPLE_XLT });
     s.addShape(pres.ShapeType.roundRect, {
       x: 0.84, y: y + 0.2, w: 1.28, h: 0.34, rectRadius: 0.08, fill: { color: c[0 + 2] },
     });
@@ -837,9 +842,9 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
 
   // right: proactive proposals
-  card(s, { x: 8.76, y: 1.7, w: 3.97, h: 4.3, fill: PURPLE_DK });
-  s.addText("主动响应与建议", {
-    x: 9.02, y: 1.9, w: 3.4, h: 0.3, isTextBox: true, margin: 0,
+  card(s, { x: 8.76, y: 1.86, w: 3.97, h: 4.2, fill: PURPLE_DK });
+  s.addText("我主动做的几件事", {
+    x: 9.02, y: 2.02, w: 3.4, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 13, bold: true, color: ORANGE,
   });
   const props = [
@@ -849,7 +854,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["推动规范立项", "算法只有一人也应正式立项，明确目标与验收标准", false],
   ];
   props.forEach((p, i) => {
-    const y = 2.32 + i * 0.94;
+    const y = 2.46 + i * 0.9;
     s.addText(p[0], {
       x: 9.02, y, w: 3.5, h: 0.26, isTextBox: true, margin: 0,
       fontFace: F, fontSize: 11, bold: true, color: p[2] ? ORANGE : WHITE,
@@ -860,7 +865,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
   pageNum(s, 11);
-  s.addNotes("算法虽然只有我一个人，但工作是高度依赖协作的。我也会主动提出自己的判断，而不只是执行。");
+  s.addNotes("这一页想说的是我怎么对待这个项目。算法岗只有我一人，没有人会来推着我做，所以很多事我是当成自己的事在推：设备不行就自己去找设备，判断标准存疑就提出来重新调研，需要别人配合就主动去谈。同样重要的是主动开口求助 —— 16 篇周报每篇都写了资源诉求，需要什么就明确提，不闷头硬扛。");
 }
 
 // =====================================================================
