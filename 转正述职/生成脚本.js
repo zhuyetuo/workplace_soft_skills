@@ -102,7 +102,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.85, y: 2.28, w: 9.4, h: 1.0, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 42, bold: true, color: WHITE,
   });
-  s.addText("智能宠物项圈 · 犬只行为识别与皮肤健康评估算法研发", {
+  s.addText("Wardyn 项目 · 智能宠物项圈 · 犬只行为识别与皮肤健康评估算法研发", {
     x: 0.87, y: 3.36, w: 9.6, h: 0.36, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 15, color: PURPLE_LT,
   });
@@ -116,7 +116,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 1.12, y: 4.44, w: 3.2, h: 0.4, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 19, bold: true, color: WHITE,
   });
-  s.addText("AI 算法工程师", {
+  s.addText("算法工程师", {
     x: 1.14, y: 4.9, w: 3.2, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12, color: PURPLE_LT,
   });
@@ -196,15 +196,15 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.92, y: 1.98, w: 3.9, h: 0.52, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 21, bold: true, color: WHITE,
   });
-  s.addText("AI 算法工程师", {
+  s.addText("算法工程师", {
     x: 0.94, y: 2.46, w: 3.9, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12.5, color: ORANGE,
   });
 
   const facts = [
-    ["入职时间", "2026 年 4 月中旬"],
-    ["试用期", "至 2026.10.12"],
-    ["所属项目", "智能宠物项圈"],
+    ["所属部门", "用户增长研发部"],
+    ["入职时间", "2026 年 4 月中旬（试用期至 10.12）"],
+    ["所属项目", "Wardyn 项目 · 智能宠物项圈"],
     ["负责方向", "犬只行为识别算法\n皮肤健康评估算法\n算法工程与数据平台"],
   ];
   let fy = 3.06;
@@ -1100,7 +1100,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.87, y: 3.6, w: 7.0, h: 0.44, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 19, color: ORANGE, charSpacing: 5,
   });
-  s.addText("朱业拓  Toky   |   AI 算法工程师   |   2026.10.08", {
+  s.addText("朱业拓  Toky   |   用户增长研发部 · 算法工程师   |   2026.10.08", {
     x: 0.87, y: 4.42, w: 8.0, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12, color: PURPLE_LT,
   });
