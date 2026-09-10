@@ -17,16 +17,42 @@ import zipfile
 
 TIMING = (
     '<p:timing><p:tnLst><p:par><p:cTn id="1" dur="indefinite" restart="never" '
-    'nodeType="tmRoot"><p:childTnLst><p:seq concurrent="1" nextAc="seek">'
-    '<p:cTn id="2" dur="indefinite" nodeType="mainSeq"><p:childTnLst/></p:cTn>'
-    '<p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl>'
-    '</p:cond></p:prevCondLst><p:nextCondLst><p:cond evt="onNext" delay="0">'
-    '<p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst></p:seq>'
-    '<p:video><p:cMediaNode vol="80000" fullScrn="1"><p:cTn id="3" fill="hold" '
-    'display="0"><p:stCondLst><p:cond delay="indefinite"/></p:stCondLst></p:cTn>'
-    '<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cMediaNode></p:video>'
+    'nodeType="tmRoot"><p:childTnLst><p:video><p:cMediaNode vol="80000" '
+    'fullScrn="1"><p:cTn id="2" fill="hold" display="0"><p:stCondLst>'
+    '<p:cond delay="indefinite"/></p:stCondLst></p:cTn><p:tgtEl>'
+    '<p:spTgt spid="{spid}"/></p:tgtEl></p:cMediaNode></p:video>'
     '</p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>'
 )
+
+
+def dedupe_shape_ids(payload):
+    """pptxgenjs can emit the same <p:cNvPr id> twice on one slide (addMedia
+    reuses the counter after addImage). PowerPoint refuses to open such a file,
+    so give every duplicate a fresh id. Runs before the timing injection, which
+    targets the video by id."""
+    fixed = []
+    for name in list(payload):
+        if not re.fullmatch(r"ppt/slides/slide\d+\.xml", name):
+            continue
+        x = payload[name].decode("utf-8")
+        ids = [int(i) for i in re.findall(r'<p:cNvPr[^>]*\bid="(\d+)"', x)]
+        if len(ids) == len(set(ids)):
+            continue
+        seen, nxt, out, pos = set(), max(ids) + 1, [], 0
+        for m in re.finditer(r'(<p:cNvPr[^>]*\bid=")(\d+)(")', x):
+            cur = int(m.group(2))
+            out.append(x[pos:m.start()])
+            if cur in seen:
+                out.append(m.group(1) + str(nxt) + m.group(3))
+                nxt += 1
+            else:
+                seen.add(cur)
+                out.append(m.group(0))
+            pos = m.end()
+        out.append(x[pos:])
+        payload[name] = "".join(out).encode("utf-8")
+        fixed.append(name.rsplit("/", 1)[-1])
+    return fixed
 
 
 def poster_parts(payload):
@@ -94,6 +120,8 @@ def main(deck, poster, hidden):
         items = z.infolist()
         payload = {i.filename: z.read(i.filename) for i in items}
 
+    deduped = dedupe_shape_ids(payload)
+
     with open(poster, "rb") as fh:
         poster_bytes = fh.read()
     posters = poster_parts(payload)
@@ -108,7 +136,8 @@ def main(deck, poster, hidden):
         for i in items:
             out.writestr(i, payload[i.filename])
     shutil.move(tmp, deck)
-    print(f"poster: {len(posters)} | fullscreen video: {len(vids)} | hidden slides: {hid}")
+    print(f"deduped shape ids: {deduped or 'none'} | poster: {len(posters)} "
+          f"| fullscreen video: {len(vids)} | hidden slides: {hid}")
 
 
 if __name__ == "__main__":

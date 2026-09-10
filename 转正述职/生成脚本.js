@@ -777,14 +777,11 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     fontFace: F, fontSize: 12.5, bold: true, color: ORANGE,
   });
   s.addText([
-    { text: "公司自研项圈因新增 GPS、LTE，至今没有成品", options: { bullet: true, breakLine: true } },
-    { text: "老款设备：数据隔天才看得到、电量撑不到 12 小时、时间一天还差好几秒", options: { bullet: true, breakLine: true } },
-    { text: "自己上电商平台选型、反复退换，找到能稳定跑满 24 小时的", options: { bullet: true, breakLine: true } },
-    { text: "改用电脑端时间做基准，不再用设备自带时间，漂移从根上绕开", options: { bullet: true, breakLine: true } },
-    { text: "摄像头也从两款监控换成 USB 直连，画面才真正对得齐", options: { bullet: true } },
+    { text: "自研项圈至今没有成品，只能用问题很多的老款设备", options: { bullet: true, breakLine: true } },
+    { text: "自己选型、反复退换，并改用电脑端时间做基准，才把采集跑稳", options: { bullet: true } },
   ], {
-    x: 0.9, y: 4.96, w: 5.4, h: 1.44, isTextBox: true, margin: 0, valign: "top",
-    fontFace: F, fontSize: 10, color: WHITE, paraSpaceAfter: 3, lineSpacingMultiple: 1.15,
+    x: 0.9, y: 5.0, w: 5.4, h: 1.0, isTextBox: true, margin: 0, valign: "top",
+    fontFace: F, fontSize: 11, color: WHITE, paraSpaceAfter: 5, lineSpacingMultiple: 1.2,
   });
 
   card(s, { x: 6.79, y: 4.44, w: 5.94, h: 2.08, fill: PURPLE_LT });
@@ -792,9 +789,9 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 7.07, y: 4.6, w: 5.4, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12.5, bold: true, color: PURPLE_DK,
   });
-  s.addText("影棚原有公司的 2 只狗。我发现影棚两位同事各养了一只，提议带来影棚参与测试 —— 公司本身有每月补贴政策，几乎没有额外成本，可采集犬只从 2 只增加到 4 只。", {
-    x: 7.09, y: 4.98, w: 5.4, h: 0.9, isTextBox: true, margin: 0, valign: "top",
-    fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
+  s.addText("影棚两位同事各养了一只狗，我提议带来参与测试 —— 公司有补贴政策，几乎零成本把可采集犬只从 2 只增加到 4 只。", {
+    x: 7.09, y: 5.0, w: 5.4, h: 0.86, isTextBox: true, margin: 0, valign: "top",
+    fontFace: F, fontSize: 11, color: INK, lineSpacingMultiple: 1.25,
   });
   s.addText("影棚 2 → 4 只　·　龙岗狗场 6 只已谈妥　·　长远按 30 → 50 → 70 → 100 → 150 只分阶段扩大", {
     x: 7.09, y: 6.02, w: 5.4, h: 0.4, isTextBox: true, margin: 0, valign: "top",
