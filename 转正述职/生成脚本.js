@@ -104,41 +104,45 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.85, y: 2.28, w: 9.4, h: 1.0, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 42, bold: true, color: WHITE,
   });
-  s.addText("Wardyn 项目 · 智能宠物项圈 · 犬只行为识别与皮肤健康评估算法研发", {
-    x: 0.87, y: 3.36, w: 9.6, h: 0.36, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 15, color: PURPLE_LT,
-  });
-
   // identity block
   s.addShape(pres.ShapeType.roundRect, {
-    x: 0.85, y: 4.24, w: 5.55, h: 1.22, rectRadius: 0.1,
+    x: 0.85, y: 3.5, w: 5.55, h: 1.22, rectRadius: 0.1,
     fill: { color: PURPLE, transparency: 35 },
   });
   s.addText([
     { text: "Toky", options: { fontSize: 20, bold: true, color: WHITE } },
     { text: "  朱业拓", options: { fontSize: 13, bold: false, color: PURPLE_LT } },
   ], {
-    x: 1.12, y: 4.4, w: 3.4, h: 0.52, isTextBox: true, margin: 0, fontFace: F,
+    x: 1.12, y: 3.66, w: 3.4, h: 0.52, isTextBox: true, margin: 0, fontFace: F,
   });
   s.addText("用户增长研发部 · 算法工程师", {
-    x: 1.14, y: 4.9, w: 3.4, h: 0.3, isTextBox: true, margin: 0,
+    x: 1.14, y: 4.16, w: 3.4, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12, color: PURPLE_LT,
   });
   s.addText("入职", {
-    x: 4.72, y: 4.42, w: 1.5, h: 0.24, isTextBox: true, margin: 0,
+    x: 4.72, y: 3.68, w: 1.5, h: 0.24, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 9.5, color: PURPLE_MD,
   });
   s.addText("2026.04", {
-    x: 4.7, y: 4.64, w: 1.6, h: 0.3, isTextBox: true, margin: 0,
+    x: 4.7, y: 3.9, w: 1.6, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 13, bold: true, color: WHITE,
   });
   s.addText("述职", {
-    x: 4.72, y: 4.98, w: 1.5, h: 0.24, isTextBox: true, margin: 0,
+    x: 4.72, y: 4.24, w: 1.5, h: 0.24, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 9.5, color: PURPLE_MD,
   });
   s.addText("2026.10.08", {
-    x: 4.7, y: 5.2, w: 1.7, h: 0.3, isTextBox: true, margin: 0,
+    x: 4.7, y: 4.46, w: 1.7, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 13, bold: true, color: ORANGE,
+  });
+
+  s.addText("Wardyn 项目 · 智能宠物项圈", {
+    x: 0.89, y: 5.0, w: 9.6, h: 0.34, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 14, bold: true, color: WHITE,
+  });
+  s.addText("犬只行为识别与皮肤健康评估算法研发", {
+    x: 0.89, y: 5.4, w: 9.6, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 12.5, color: PURPLE_LT,
   });
 
   s.addText("Health Innovation for a Clean & Comfortable Life", {
@@ -823,6 +827,15 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   ], {
     x: 0.87, y: 4.4, w: 9.0, h: 0.34, isTextBox: true, margin: 0, fontFace: F,
   });
+  s.addText("Wardyn 项目 · 智能宠物项圈", {
+    x: 0.89, y: 5.0, w: 9.6, h: 0.34, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 14, bold: true, color: WHITE,
+  });
+  s.addText("犬只行为识别与皮肤健康评估算法研发", {
+    x: 0.89, y: 5.4, w: 9.6, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 12.5, color: PURPLE_LT,
+  });
+
   s.addText("Health Innovation for a Clean & Comfortable Life", {
     x: 0.87, y: 6.5, w: 8, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: PURPLE_MD, italic: true,
