@@ -284,7 +284,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["把数据采回来", "没有设备，没有场地", "6 个摄像头 + 12 个项圈，无人值守自动采集"],
     ["把数据整理好", "没有工具，没有流程", "自建标注平台，AI 先标、多人协同核对"],
     ["让产品用起来", "无", "已交付后端上线，App 里能看到算法结果"],
-    ["有多少只狗可采", "0 只", "影棚 4 只，狗场 6 只待进场"],
+    ["可采集的狗", "影棚 2 只，但没有采集流程", "影棚 4 只，狗场 6 只待进场"],
   ];
 
   rows.forEach((r, i) => {
@@ -733,7 +733,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.6  DATA ASSETS", "成果五：从没有一只狗，到 10 只狗可采");
+  pageTitle(s, "02.6  DATA ASSETS", "成果五：把数据采集从零跑起来");
 
   s.addText("从没有一条数据可用，到每天都有稳定的数据进来", {
     x: 0.62, y: 1.44, w: 11.6, h: 0.3, isTextBox: true, margin: 0,
@@ -745,8 +745,8 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["5 月", "先用模拟数据", "真实数据还没有，自己造数据把流程跑通", PURPLE_MD],
     ["6 月", "拿到第一批真数据", "影棚开始采集，解决了画面与数据对不齐的老问题", PURPLE],
     ["7 月", "采集流程定型", "方案固定下来，狗增加到 3 只", PURPLE],
-    ["8 月", "为规模化铺路", "输出采集方案供商务谈合作，转向龙岗", ORANGE_DK],
-    ["9 月", "狗场谈成", "龙岗实地考察通过，6 间犬舍 6 只狗可采", ORANGE_DK],
+    ["8 月", "为规模化铺路", "输出采集需求方案供商务对接；实地考察沙井，判断成本过高", ORANGE_DK],
+    ["9 月", "狗场落实", "商务谈成龙岗，我赴现场考察，确认 6 间犬舍 6 只狗可采", ORANGE_DK],
   ];
 
   const tlY = 2.0;
@@ -776,7 +776,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.88, y: 5.1, w: 3.4, h: 0.28, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12, bold: true, color: ORANGE,
   });
-  s.addText("影棚 0 → 4 只　·　龙岗狗场 6 只已谈妥", {
+  s.addText("影棚 2 → 4 只　·　龙岗狗场 6 只已谈妥", {
     x: 0.9, y: 5.44, w: 5.4, h: 0.28, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11, color: WHITE,
   });
@@ -786,16 +786,16 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
 
   card(s, { x: 6.79, y: 4.92, w: 5.94, h: 1.62, fill: PURPLE_LT });
-  s.addText("主动推动的关键判断", {
+  s.addText("我主动推动的一件事", {
     x: 7.07, y: 5.1, w: 3.4, h: 0.28, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12, bold: true, color: PURPLE_DK,
   });
-  s.addText("沙井狗场报价 1000 元一只一天，判断不划算果断放弃，转向龙岗并推动谈成。", {
+  s.addText("影棚原有公司的 2 只狗。我发现影棚两位同事各养了一只，提议带来影棚参与测试 —— 公司本身有每月补贴政策，几乎没有额外成本，可采集犬只从 2 只增加到 4 只。", {
     x: 7.09, y: 5.44, w: 5.4, h: 0.9, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
   });
   pageNum(s, 10);
-  s.addNotes("数据资源不能被动等待。从模拟数据起步，到影棚落地，再到狗场合作谈成，这条线是我主动推动的。");
+  s.addNotes("这里要说清楚分工：狗场是商务去找、去谈的，我提的是数据需求、输出采集方案，并到现场考察确认可行。我自己主动推动的是影棚这条线 —— 发现两位同事各养了一只狗，提议带来参与测试，公司有补贴政策，几乎零成本把犬只从 2 只加到 4 只。");
 }
 
 // =====================================================================
