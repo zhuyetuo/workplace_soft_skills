@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE"; // 13.33 x 7.5
-pres.author = "朱业拓 Toky";
+pres.author = "Toky|朱业拓";
 pres.company = "HICC Pet";
 pres.title = "转正述职报告";
 
@@ -112,7 +112,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.85, y: 4.24, w: 5.55, h: 1.22, rectRadius: 0.1,
     fill: { color: PURPLE, transparency: 35 },
   });
-  s.addText("朱业拓  Toky", {
+  s.addText("Toky|朱业拓", {
     x: 1.12, y: 4.44, w: 3.2, h: 0.4, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 19, bold: true, color: WHITE,
   });
@@ -192,7 +192,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 
   // left: profile
   card(s, { x: 0.6, y: 1.66, w: 4.5, h: 4.9, fill: PURPLE_DK });
-  s.addText("朱业拓 / Toky", {
+  s.addText("Toky|朱业拓", {
     x: 0.92, y: 1.98, w: 3.9, h: 0.52, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 21, bold: true, color: WHITE,
   });
@@ -1100,7 +1100,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.87, y: 3.6, w: 7.0, h: 0.44, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 19, color: ORANGE, charSpacing: 5,
   });
-  s.addText("朱业拓  Toky   |   用户增长研发部 · 算法工程师   |   2026.10.08", {
+  s.addText("Toky|朱业拓　　用户增长研发部 · 算法工程师　　2026.10.08", {
     x: 0.87, y: 4.42, w: 8.0, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12, color: PURPLE_LT,
   });
