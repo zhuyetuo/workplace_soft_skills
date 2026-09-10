@@ -409,7 +409,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["抓挠", "稳定版 v2，4 只狗验证可用", PURPLE, "可用"],
     ["活动", "基础可用", PURPLE_MD, "可用"],
     ["睡觉 / 休息", "基础可用", PURPLE_MD, "可用"],
-    ["没戴项圈", "已能识别，线上待接入", PURPLE_MD, "已训练"],
+    ["没戴项圈", "基础可用，线上待接入", PURPLE_MD, "可用"],
   ];
   beh.forEach((b, i) => {
     const y = 2.06 + i * 0.83;
