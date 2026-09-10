@@ -257,62 +257,79 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 }
 
 // =====================================================================
-// S4 — 成果总览：从 0 到 1
+// S4 — 成果总览：两条主线的推进
 // =====================================================================
 {
   const s = pres.addSlide();
   lightBg(s);
   pageTitle(s, "02  KEY RESULTS", "试用期关键成果：从 0 到 1");
 
-  // the starting point, as one number
-  card(s, { x: 0.6, y: 1.66, w: 3.16, h: 4.86, fill: PURPLE_DK });
-  s.addText("入职时", {
-    x: 0.86, y: 1.96, w: 2.6, h: 0.32, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 13, bold: true, color: ORANGE,
-  });
-  s.addText("0", {
-    x: 0.86, y: 2.4, w: 2.64, h: 2.0, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 104, bold: true, color: WHITE, align: "center", valign: "middle",
-  });
-  s.addText("没有数据\n没有模型\n没有平台", {
-    x: 0.86, y: 4.5, w: 2.64, h: 1.3, isTextBox: true, margin: 0, valign: "top",
-    fontFace: F, fontSize: 14, color: PURPLE_LT, align: "center", lineSpacingMultiple: 1.5,
+  s.addText("入职时没有数据、没有模型、没有平台。下面是两条主线各自的推进", {
+    x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11.5, color: MUTED,
   });
 
-  // what exists now
-  const now = [
-    ["行为识别", "4 类", "抓挠 · 活动 · 睡觉 · 没戴项圈"],
-    ["皮肤评估", "每天出分", "每只狗自动跑，不用人算"],
-    ["数据采集", "6 + 12", "摄像头 + 项圈，无人值守"],
-    ["数据标注", "AI 先标", "人只做核对"],
-    ["线上服务", "已上线", "App 里能看到算法结果"],
-    ["可采集的狗", "4 + 6", "影棚 4 只，狗场 6 只待进场"],
+  const LX = 0.6, LW = 1.42, TX = 2.24, CW = 2.06, STEP = 2.1;
+  const months = ["5 月", "6 月", "7 月", "8 月", "9 月"];
+  months.forEach((m, i) => {
+    s.addText(m, {
+      x: TX + i * STEP, y: 1.86, w: CW, h: 0.28, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11, bold: true, color: PURPLE_MD, align: "center",
+    });
+  });
+
+  const lanes = [
+    ["行为识别", 2.26, [
+      [0, "跑通流程", "用自己造的数据先把链路走通", false],
+      [1, "拿到真数据", "影棚开始采集，解决画面与数据对不齐", false],
+      [2, "采集定型", "方案固定下来，狗增加到 3 只", false],
+      [3, "抓挠达标", "8.31 目标准确率 ≥ 85%，已达成", true],
+      [4, "四类可用", "抓挠 · 活动 · 睡觉 · 没戴项圈", false],
+    ]],
+    ["皮肤健康评估", 4.44, [
+      [2, "方案定下来", "和产品、兽医一起把评分口径谈清楚", false],
+      [3, "规则版上线", "网页系统跑通，兽医可直接核对", false],
+      [4, "每天自动出分", "每只狗每天出结果，AI 版方案已验证可行", true],
+    ]],
   ];
-  now.forEach((it, i) => {
-    const col = i % 3, row = Math.floor(i / 3);
-    const x = 4.06 + col * 2.94;
-    const y = 1.66 + row * 2.52;
-    card(s, { x, y, w: 2.72, h: 2.34, fill: PURPLE_XLT });
-    s.addText(it[0], {
-      x: x + 0.24, y: y + 0.24, w: 2.24, h: 0.28, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11, color: MUTED,
+
+  lanes.forEach(([label, ly, items]) => {
+    card(s, { x: LX, y: ly, w: LW, h: 1.86, fill: PURPLE_DK });
+    s.addText(label, {
+      x: LX, y: ly, w: LW, h: 1.86, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 13, bold: true, color: WHITE, align: "center", valign: "middle",
     });
-    s.addText(it[1], {
-      x: x + 0.24, y: y + 0.62, w: 2.24, h: 0.7, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 26, bold: true, color: PURPLE_DK,
+    // the track the milestones sit on
+    s.addShape(pres.ShapeType.rect, {
+      x: TX, y: ly + 0.9, w: 4 * STEP + CW, h: 0.03, fill: { color: PURPLE_LT },
     });
-    s.addText(it[2], {
-      x: x + 0.24, y: y + 1.42, w: 2.28, h: 0.72, isTextBox: true, margin: 0, valign: "top",
-      fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
+    items.forEach(([col, title, note, hot]) => {
+      const x = TX + col * STEP;
+      card(s, { x, y: ly, w: CW, h: 1.86, fill: hot ? PURPLE : PURPLE_XLT });
+      s.addText(title, {
+        x: x + 0.16, y: ly + 0.26, w: CW - 0.32, h: 0.44, isTextBox: true, margin: 0,
+        fontFace: F, fontSize: 15, bold: true,
+        color: hot ? WHITE : PURPLE_DK, align: "center",
+      });
+      s.addText(note, {
+        x: x + 0.16, y: ly + 0.84, w: CW - 0.32, h: 0.86, isTextBox: true, margin: 0, valign: "top",
+        fontFace: F, fontSize: 9.5, color: hot ? PURPLE_LT : MUTED,
+        align: "center", lineSpacingMultiple: 1.25,
+      });
     });
   });
 
-  s.addText("算法整体进度 45% → 87%，16 周无停滞。", {
-    x: 0.62, y: 6.76, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11, color: MUTED,
+  card(s, { x: 0.6, y: 6.5, w: 12.13, h: 0.56, fill: PURPLE_XLT });
+  s.addText("另有一块延伸：图像识别 —— 用户上传照片时辅助判断，口腔牙齿检测是额外做的验证", {
+    x: 0.9, y: 6.5, w: 6.6, h: 0.56, isTextBox: true, margin: 0, valign: "middle",
+    fontFace: F, fontSize: 10.5, color: INK,
+  });
+  s.addText("算法整体进度 45% → 87%，16 周无停滞", {
+    x: 7.8, y: 6.5, w: 4.7, h: 0.56, isTextBox: true, margin: 0, valign: "middle",
+    fontFace: F, fontSize: 10.5, bold: true, color: PURPLE_DK, align: "right",
   });
   pageNum(s, 4);
-  s.addNotes("这一页是全篇的骨架：入职时算法侧什么都没有，现在这六件事都跑通了，而且是彼此打通的一条链路。");
+  s.addNotes("两条主线：行为识别和皮肤健康评估。行为识别 5 月先用模拟数据把链路跑通，6 月拿到第一批真实数据，7 月采集定型，8 月抓挠识别达到公司定的 85% 目标，9 月四类行为都可用。皮肤评估 7 月把评分口径和产品、兽医谈定，8 月规则版网页系统上线，9 月每只狗每天自动出分。深色的是每条线目前最关键的节点。");
 }
 
 // =====================================================================
