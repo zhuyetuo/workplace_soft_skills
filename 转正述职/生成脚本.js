@@ -255,12 +255,12 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
 
   const stats = [
-    ["45% → 87%", "算法整体进度", "覆盖 16 周持续推进", PURPLE],
-    ["70% → 90%", "抓挠识别 F1", "8.31 目标 ≥85% 提前达成", ORANGE_DK],
-    ["4 类", "行为识别能力", "抓挠 / 活动 / 睡觉 / 未佩戴", PURPLE_MD],
-    ["< 0.1s", "视频-IMU 同步误差", "攻克标注核心阻塞点", PURPLE],
-    ["2 套", "皮肤评估方案", "规则统计版 + ML 双模型版", ORANGE_DK],
-    ["0 → 4+6", "可采集犬只资源", "影棚 4 只 + 狗场 6 只落地", PURPLE_MD],
+    ["45% → 87%", "算法整体进度", "16 周持续推进，无停滞", PURPLE],
+    ["70% → 90%", "抓挠识别准确率", "8.31 目标 ≥85%，提前 4 周达成", ORANGE_DK],
+    ["7.8 万行", "自建系统代码", "采集 / 平台 / 训练 / 服务 四套系统", PURPLE_MD],
+    ["128 个", "平台 API 接口", "23 张数据表，自研平台替代 Label Studio", PURPLE],
+    ["2 套", "皮肤评估方案", "SBS 规则引擎 + 两阶段 ML 双模型", ORANGE_DK],
+    ["0 → 4+6", "可采集犬只资源", "影棚 4 只 + 龙岗狗场 6 只落地", PURPLE_MD],
   ];
 
   stats.forEach((st, i) => {
@@ -370,7 +370,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["抓挠识别", "已达标，训练个体 F1 90%", ORANGE_DK, "达标"],
     ["活动检测", "基础可用 80%+", PURPLE_MD, "可用"],
     ["睡觉 / 休息", "基础可用 80%+", PURPLE_MD, "可用"],
-    ["未佩戴检测", "已纳入 4 分类体系并完成测试", PURPLE, "完成"],
+    ["未佩戴检测", "已训练为独立类别，线上服务待接入", PURPLE_MD, "已训练"],
   ];
   beh.forEach((b, i) => {
     const y = 2.06 + i * 0.83;
@@ -418,10 +418,10 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     fontFace: F, fontSize: 12.5, bold: true, color: ORANGE,
   });
   s.addText([
-    { text: "模型 A：特征表 → C0 / C1 / C2 皮肤状态分级", options: { bullet: true, breakLine: true } },
-    { text: "模型 B：特征 + A 输出 + 用户问答 → S0 / S1 / S2", options: { bullet: true, breakLine: true } },
-    { text: "合成数据模拟 86 个场景，F1 达 93%+", options: { bullet: true, breakLine: true } },
-    { text: "工程框架已建立，可随真实数据持续迭代", options: { bullet: true } },
+    { text: "模型 A：44 特征 → C0 / C1 / C2，每日自动运行", options: { bullet: true, breakLine: true } },
+    { text: "模型 B：54 特征（含问答）→ S0 / S1 / S2", options: { bullet: true, breakLine: true } },
+    { text: "86 场景合成数据，交叉验证宏 F1 0.93 / 0.90（真实数据待验证）", options: { bullet: true, breakLine: true } },
+    { text: "个体基线三套实现并行，内部每日运行、边跑边调优", options: { bullet: true } },
   ], {
     x: 7.2, y: 4.34, w: 5.3, h: 1.28, isTextBox: true, margin: 0, valign: "top",
     fontFace: F, fontSize: 10.5, color: WHITE, paraSpaceAfter: 4,
@@ -433,7 +433,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.88, y: 6.0, w: 2.5, h: 0.28, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11, bold: true, color: PURPLE_DK,
   });
-  s.addText("4 只犬 5 天测试中，两只犬日均抓挠 20+ 次触发 C2，但皮肤无实际病变 —— 说明个体「正常抓挠水平」本就存在差异。据此提出引入个体基线机制，比单纯调权重更根本。", {
+  s.addText("4 只犬 5 天测试中，两只犬日均抓挠 20+ 次触发 C2，但皮肤无实际病变 —— 说明个体「正常抓挠水平」本就存在差异。据此引入个体基线机制并已落地运行，比单纯调权重更根本；目前内部每日跟踪、边跑边调优，暂未上线。", {
     x: 3.5, y: 5.98, w: 9.0, h: 0.62, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: INK, valign: "middle", lineSpacingMultiple: 1.2,
   });
@@ -442,69 +442,171 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 }
 
 // =====================================================================
-// S7 — 工程与平台建设
+// S7 — 四个自建系统
 // =====================================================================
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.3  ENGINEERING", "核心成果三：算法工程与数据平台建设");
+  pageTitle(s, "02.3  SYSTEMS", "核心成果三：四个自建系统，约 7.8 万行代码");
 
-  s.addText("模型能跑通只是第一步 —— 试用期内把算法做成了可采集、可标注、可部署、可调用的完整链路", {
-    x: 0.62, y: 1.44, w: 11.6, h: 0.3, isTextBox: true, margin: 0,
+  s.addText("试用期内从零搭起采集、平台、训练、服务四套系统，彼此打通，构成算法可持续迭代的完整基础设施", {
+    x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11.5, color: MUTED,
   });
 
-  const eng = [
-    ["01", "采集与同步工程", [
-      "攻克视频-IMU 时间戳对齐，误差控制在 0.1s 以内",
-      "RTSP 方案验证不可行后果断放弃，收敛至 USB 本地录制",
-      "采样率 25Hz→16Hz，依奈奎斯特论证降功耗与存储",
-    ]],
-    ["02", "实时推理工程", [
-      "WitMotion-IMU / HICC-IMU 蓝牙接收实时推理",
-      "现场采集即可实时验证模型效果",
-      "修复线上线下推理不一致（特征处理流程未对齐）",
-    ]],
-    ["03", "数据标注平台", [
-      "Label Studio 部署改造 + 自研平台建设",
-      "NAS 原始数据挂载、成员分级权限与数据隔离",
-      "定位并修复卡顿瓶颈，保障多人协同标注效率",
-    ]],
-    ["04", "服务化与部署", [
-      "模型 pipeline + 服务 pipeline，合并调度简化运维",
-      "模型服务打包并完成外网部署，后端对接打通",
-      "模拟 24 场景 / 180 天数据，压测 1 万台设备并发",
-    ]],
+  const sys = [
+    ["采集与同步", "witmotion_imu", "1.3 万行", [
+      "N 路摄像头 × M 个 IMU 帧级同步，现场 6 机位 / 12 设备无人值守运行",
+      "单一时钟 + IMU 事件驱动取帧 + 墙钟时间戳变帧率写入，同步由构造保证",
+      "自研 HICC 项圈 0x55AA 协议解析（含校验与授时），兼容 WitMotion 双帧格式",
+    ], true],
+    ["标注与训练平台", "label_infra / smart-label", "3.0 万行", [
+      "自研平台替代 Label Studio，迁移 58 个项目 / 2,088 任务 / 2,609 条标注",
+      "128 个 API、23 张表、31 次数据库迁移；React + FastAPI + MySQL",
+      "AI 预标注 → 疑似片段召回 → 多人协同审核 → 导出训练 → 模型热切换闭环",
+    ], false],
+    ["模型训练与皮肤评估", "imu_train", "2.7 万行", [
+      "193 维手工特征；13 种模型实现（6 种深度 + 7 种经典）可横向对比",
+      "事件级 F1e 指标自研实现，网格搜索置信阈值与合并间隔",
+      "皮肤评估三条技术路线：SBS 规则引擎 / 两阶段 ML / 分层贝叶斯",
+    ], false],
+    ["在线推理与评估", "algo_service", "0.8 万行", [
+      "15 秒增量推理 + 每日批量评估 + 每日基线更新，三条调度链路",
+      "TDengine 时序库 + MySQL 按设备分表，全链路按用户本地时区切天",
+      "133 个单元测试 / 约 162 条用例，全部不依赖外部服务即可运行",
+    ], false],
   ];
 
-  eng.forEach((e, i) => {
+  sys.forEach((sy, i) => {
     const col = i % 2, row = Math.floor(i / 2);
     const x = 0.6 + col * 6.19;
-    const y = 1.88 + row * 2.44;
-    card(s, { x, y, w: 5.94, h: 2.24, fill: PURPLE_XLT });
-    badge(s, x + 0.26, y + 0.24, 0.5, e[0], PURPLE, WHITE, 12);
-    s.addText(e[1], {
-      x: x + 0.92, y: y + 0.3, w: 4.7, h: 0.3, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 13.5, bold: true, color: PURPLE_DK,
+    const y = 1.86 + row * 2.4;
+    const dark = sy[4];
+    card(s, { x, y, w: 5.94, h: 2.24, fill: dark ? PURPLE_DK : PURPLE_XLT });
+
+    s.addText(sy[0], {
+      x: x + 0.3, y: y + 0.2, w: 3.3, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 13.5, bold: true, color: dark ? WHITE : PURPLE_DK,
     });
-    s.addText(e[2].map((t, k) => ({
-      text: t, options: { bullet: true, breakLine: k !== e[2].length - 1 },
+    s.addShape(pres.ShapeType.roundRect, {
+      x: x + 4.62, y: y + 0.2, w: 1.06, h: 0.3, rectRadius: 0.07,
+      fill: { color: dark ? ORANGE : PURPLE_MD },
+    });
+    s.addText(sy[2], {
+      x: x + 4.62, y: y + 0.2, w: 1.06, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 10, bold: true,
+      color: dark ? PURPLE_DK : WHITE, align: "center", valign: "middle",
+    });
+    s.addText(sy[1], {
+      x: x + 0.31, y: y + 0.52, w: 4.2, h: 0.24, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 9.5, color: dark ? PURPLE_LT : MUTED,
+    });
+    s.addText(sy[3].map((t, k) => ({
+      text: t, options: { bullet: true, breakLine: k !== sy[3].length - 1 },
     })), {
-      x: x + 0.3, y: y + 0.82, w: 5.36, h: 1.28, isTextBox: true, margin: 0, valign: "top",
-      fontFace: F, fontSize: 10.5, color: INK, paraSpaceAfter: 5, lineSpacingMultiple: 1.1,
+      x: x + 0.3, y: y + 0.84, w: 5.36, h: 1.3, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 10, color: dark ? WHITE : INK,
+      paraSpaceAfter: 5, lineSpacingMultiple: 1.12,
     });
   });
+
+  s.addText("另有约 2 万行设计文档：系统设计、临床量表设计、数据异常处理预案、标注规范、ML 迁移方案等", {
+    x: 0.62, y: 6.66, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 10.5, color: MUTED,
+  });
   pageNum(s, 7);
-  s.addNotes("工程能力是我认为算法岗容易被忽视但很关键的部分。模型服务外网部署与后端打通，意味着算法结果真正进入了产品使用流程。");
+  s.addNotes("这四套系统是试用期最实在的产出。采集解决数据从哪来，平台解决数据怎么变成标注，训练解决模型怎么出来，服务解决模型怎么用起来。四套打通，算法才能自己转起来。");
 }
 
 // =====================================================================
-// S7b — 算法效果与平台演示（截图存在则自动嵌入，否则降级为演示面板）
+// S7b — 算法平台全链路
 // =====================================================================
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.6  LIVE DEMO", "算法效果与平台演示");
+  pageTitle(s, "02.4  PLATFORM", "核心成果四：算法平台全链路自建");
+
+  s.addText("从原始数据到多套算法上线，全链路自建并打通 —— 不只是标注工具，而是支撑算法持续迭代的基础设施", {
+    x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11.5, color: MUTED,
+  });
+
+  // pipeline
+  const stages = ["数据采集", "AI 预标注", "分发与审核", "模型训练", "模型测试", "多算法服务"];
+  stages.forEach((st, i) => {
+    const x = 0.6 + i * 2.03;
+    const hot = i === 1 || i === 2;
+    s.addShape(pres.ShapeType.roundRect, {
+      x, y: 1.88, w: 1.88, h: 0.56, rectRadius: 0.09,
+      fill: { color: hot ? PURPLE : PURPLE_LT },
+    });
+    s.addText(st, {
+      x, y: 1.88, w: 1.88, h: 0.56, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11.5, bold: true,
+      color: hot ? WHITE : PURPLE_DK, align: "center", valign: "middle",
+    });
+    if (i < stages.length - 1) {
+      s.addText("→", {
+        x: x + 1.85, y: 1.88, w: 0.21, h: 0.56, isTextBox: true, margin: 0,
+        fontFace: F, fontSize: 11, bold: true, color: PURPLE_MD, align: "center", valign: "middle",
+      });
+    }
+  });
+
+  // screenshot of the review workspace
+  const shot = "media/review.png";
+  const sx = 0.6, sy = 2.68, sw = 6.6, sh = 3.13;
+  if (fs.existsSync(shot)) {
+    s.addImage({ path: shot, x: sx, y: sy, w: sw, h: sh });
+  } else {
+    card(s, { x: sx, y: sy, w: sw, h: sh, fill: PURPLE_DK });
+  }
+  s.addText("标注审核工作台：三路摄像头同步 + IMU 波形对齐，AI 预标片段与疑似片段并列待人工确认", {
+    x: sx, y: sy + sh + 0.08, w: sw, h: 0.28, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 9.5, color: MUTED,
+  });
+
+  // mechanism callouts
+  const mech = [
+    ["AI 预标注，人工只做确认", "模型先跑出候选片段并标注来源与置信度，人工从「从头标」变为「审核与修正」"],
+    ["疑似片段主动召回", "模型低置信片段（如 37%）结合频谱线索自动推送复核，专门捕捉模型最不确定的样本"],
+    ["多人协同审核流", "任务认领、整份通过、分级权限与数据隔离，支撑标注规模化扩大"],
+  ];
+  mech.forEach((m, i) => {
+    const y = sy + i * 1.09;
+    card(s, { x: 7.44, y, w: 5.29, h: 0.95, fill: PURPLE_XLT });
+    badge(s, 7.66, y + 0.26, 0.42, String(i + 1), PURPLE_MD, WHITE, 11);
+    s.addText(m[0], {
+      x: 8.2, y: y + 0.12, w: 4.4, h: 0.28, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 12, bold: true, color: PURPLE_DK,
+    });
+    s.addText(m[1], {
+      x: 8.2, y: y + 0.42, w: 4.36, h: 0.46, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 9.5, color: INK, lineSpacingMultiple: 1.2,
+    });
+  });
+
+  card(s, { x: 0.6, y: 6.3, w: 12.13, h: 0.72, fill: PURPLE_DK });
+  s.addText("平台承载的算法", {
+    x: 0.88, y: 6.52, w: 2.1, h: 0.28, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11, bold: true, color: ORANGE,
+  });
+  s.addText("行为识别（抓挠 / 活动 / 睡觉 / 未佩戴）　·　皮肤健康评估（规则统计版 + ML 版）　·　口腔牙结石识别", {
+    x: 3.0, y: 6.5, w: 9.5, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11, color: WHITE, valign: "middle",
+  });
+
+  pageNum(s, 8);
+  s.addNotes("平台是我认为试用期最有复用价值的产出。它把采集、标注、训练、测试、服务串成一条链路，三套算法都跑在上面。最关键的两个机制是 AI 预标注和疑似片段主动召回 —— 前者把人从重复劳动里解放出来，后者让人力集中在模型最不确定的地方。");
+}
+
+// =====================================================================
+// S7c — 算法效果与平台演示（截图存在则自动嵌入，否则降级为演示面板）
+// =====================================================================
+{
+  const s = pres.addSlide();
+  lightBg(s);
+  pageTitle(s, "02.7  LIVE DEMO", "算法效果与平台演示");
 
   s.addText("以下三项将在述职现场做实际演示，此处为效果留档", {
     x: 0.62, y: 1.44, w: 11.6, h: 0.3, isTextBox: true, margin: 0,
@@ -549,7 +651,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.3,
     });
   });
-  pageNum(s, 8);
+  pageNum(s, 9);
   s.addNotes("这一页配合现场演示：先放抓挠检测的实际效果，再演示标注平台的操作，最后展示口腔牙结石识别。演示时长控制在 2 分钟内。");
 }
 
@@ -559,7 +661,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.4  DATA ASSETS", "核心成果四：数据资源体系从 0 到 1");
+  pageTitle(s, "02.5  DATA ASSETS", "核心成果五：数据资源体系从 0 到 1");
 
   s.addText("数据是算法的上限。试用期内主动推动，把「无数据可用」变成「稳定可持续的采集供给」", {
     x: 0.62, y: 1.44, w: 11.6, h: 0.3, isTextBox: true, margin: 0,
@@ -620,7 +722,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 7.09, y: 5.44, w: 5.4, h: 0.9, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
   });
-  pageNum(s, 9);
+  pageNum(s, 10);
   s.addNotes("数据资源不能被动等待。从模拟数据起步，到影棚落地，再到狗场合作谈成，这条线是我主动推动的。");
 }
 
@@ -630,7 +732,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.5  COLLABORATION", "核心成果五：跨团队协作与主动推动");
+  pageTitle(s, "02.6  COLLABORATION", "核心成果六：跨团队协作与主动推动");
 
   const collab = [
     ["后端", "数据库架构调整（IMU 六轴迁移 TDengine）、服务联调、模型服务外网对接打通", PURPLE],
@@ -658,27 +760,28 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 
   // right: proactive proposals
   card(s, { x: 8.76, y: 1.7, w: 3.97, h: 4.3, fill: PURPLE_DK });
-  s.addText("主动提出的建议", {
-    x: 9.02, y: 1.92, w: 3.4, h: 0.3, isTextBox: true, margin: 0,
+  s.addText("主动响应与建议", {
+    x: 9.02, y: 1.9, w: 3.4, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 13, bold: true, color: ORANGE,
   });
   const props = [
-    ["质疑临床阈值", "实测博美一晚抓挠 10-20 次，推算全天极可能超 30 次但皮肤无异常，提出需重新调研基线依据"],
-    ["建议竞品对标", "建议采购 FitBark / Tractive 等竞品实测，同步佩戴对比数据与识别效果"],
-    ["推动规范立项", "即便算法仅一人，也应在 ONES 立项，明确阶段目标与验收标准"],
+    ["1 天完成口腔识别可行性验证", "产品负责人提出口腔健康方向后，当天做出犬只牙结石（正常/异常）识别原型，含图片、视频、摄像头实时三种模式，用于验证算法可行性与实际落点效果", true],
+    ["质疑临床抓挠阈值", "实测博美一晚抓挠 10-20 次，推算全天极可能超 30 次但皮肤无异常，提出需重新调研基线依据", false],
+    ["建议竞品对标", "建议采购 FitBark / Tractive 等竞品实测，同步佩戴对比数据与识别效果", false],
+    ["推动规范立项", "即便算法仅一人，也应在 ONES 立项，明确阶段目标与验收标准", false],
   ];
   props.forEach((p, i) => {
-    const y = 2.36 + i * 1.24;
+    const y = 2.32 + i * 0.94;
     s.addText(p[0], {
-      x: 9.02, y, w: 3.5, h: 0.28, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11.5, bold: true, color: WHITE,
+      x: 9.02, y, w: 3.5, h: 0.26, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11, bold: true, color: p[2] ? ORANGE : WHITE,
     });
     s.addText(p[1], {
-      x: 9.04, y: y + 0.3, w: 3.46, h: 0.86, isTextBox: true, margin: 0, valign: "top",
-      fontFace: F, fontSize: 9.5, color: PURPLE_LT, lineSpacingMultiple: 1.25,
+      x: 9.04, y: y + 0.28, w: 3.46, h: 0.62, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 9, color: PURPLE_LT, lineSpacingMultiple: 1.2,
     });
   });
-  pageNum(s, 10);
+  pageNum(s, 11);
   s.addNotes("算法虽然只有我一个人，但工作是高度依赖协作的。我也会主动提出自己的判断，而不只是执行。");
 }
 
@@ -744,7 +847,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 2.4, y: 5.64, w: 10.1, h: 0.7, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11.5, color: WHITE, valign: "middle", lineSpacingMultiple: 1.25,
   });
-  pageNum(s, 11);
+  pageNum(s, 12);
   s.addNotes("持续产出不是靠某一次冲刺，而是稳定的节奏。16周周报、进度从45%到87%，每周都有实质推进。");
 }
 
@@ -757,11 +860,11 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   pageTitle(s, "04  GROWTH", "个人成长与方法论沉淀");
 
   const growth = [
-    ["数据质量 > 数据量", "全量复核并修正标注错误后训练的模型，效果优于单纯增加数据量。定期全量复核与工程化错误检测，比盲目堆数据更有效。", ORANGE_DK],
-    ["用模型输出反推数据缺口", "按置信度区间分层分析误识别与漏识别，定向补充负样本，形成「测试发现问题→补充数据→迭代」的闭环，比增量数据更高效。", PURPLE],
+    ["数据质量 > 数据量", "训练集导出时把「存疑」时段从重叠标注中挖掉 —— 不挖的话，一段大概率是抓挠的区间会被当作负样本喂给模型，比没有这条数据更糟。", ORANGE_DK],
+    ["用模型输出反推数据缺口", "把模型低置信片段与频谱线索单独建表推送人工复核：确认的是漏检、否决的是误检，两者都是重训练最有价值的样本。", PURPLE],
     ["先分清是算法问题还是定义问题", "活动与睡觉混淆的根因是业务边界模糊，不是模型能力不足。算法无法自行划定业务语义，须先对齐定义再训练。", PURPLE_MD],
-    ["工程能力决定算法能否落地", "服务化部署、接口稳定、与后端联通，才是算法进入产品流程的标志。效果好只是研发侧的里程碑。", PURPLE],
-    ["及时验证、及时放弃", "RTSP 方案在验证发现网络抖动导致延迟不可预测后果断放弃，收敛至可控方案，避免沉没成本继续扩大。", ORANGE_DK],
+    ["发现自己的错误要主动报出来", "自查发现合成数据里特征与标签共用了同一个生成表达式，虚高的宏 F1 0.957 修正后降到 0.886，写进文档公开。宁可报低，不留隐患。", PURPLE],
+    ["及时验证、及时放弃", "RTSP 方案验证发现网络抖动导致延迟不可预测后果断放弃，收敛至 USB 本地录制；实测两种重采样算法差异达信号标准差的 6-8%，也是靠实测而非推理定论。", ORANGE_DK],
   ];
 
   growth.forEach((g, i) => {
@@ -780,7 +883,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
     });
   });
-  pageNum(s, 12);
+  pageNum(s, 13);
   s.addNotes("这五条是我试用期最重要的方法论沉淀，也是我认为可以持续复用到后续工作中的东西。");
 }
 
@@ -809,7 +912,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   const gaps = [
     ["跨个体泛化能力不足", "新个体马尔济斯 F1 仅 70%，训练个体达 90%。根因是训练覆盖的犬只个体数太少，品种、体型、运动习惯差异大", "推动狗场采集落地，将训练个体扩至 10 只以上，再以全新个体验证泛化，目标 85%+"],
     ["松动检测尚未启动", "优先级让位于抓挠识别与皮肤评估；且松动判定边界本身需与产品、兽医对齐才能定义清楚", "与产品、兽医对齐判定标准后启动开发，与未佩戴检测共同构成全天有效佩戴时间统计"],
-    ["皮肤评估依赖合成数据", "ML 版仍基于合成数据训练，真实病例样本积累不足，个体基线机制尚未落地", "持续推动兽医参与评估标注，积累真实数据做二次训练；优先开发个体基线机制"],
+    ["皮肤评估依赖合成数据", "ML 版仍基于合成数据训练，真实病例样本积累不足；个体基线已落地但仅内部运行，尚未推上线", "持续推动兽医参与评估标注，积累真实数据做二次训练；个体基线跟踪调优后推上线"],
     ["业务理解仍需加深", "对犬只行为的业务语义、兽医临床判断标准的理解，仍主要依赖他人输入，独立判断力有待加强", "主动向兽医与产品请教，系统补充宠物皮肤健康领域知识，减少反复对齐成本"],
   ];
 
@@ -830,7 +933,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 10, color: INK, valign: "middle", lineSpacingMultiple: 1.2,
     });
   });
-  pageNum(s, 13);
+  pageNum(s, 14);
   s.addNotes("这一页是我对自己短板的判断。泛化能力是当前最需要解决的问题，其他三项也都有明确路径。");
 }
 
@@ -846,7 +949,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["近期", "1-2 个月", [
       "推动龙岗狗场正式采集落地，训练个体扩至 10 只以上",
       "数据平台上线 AI 自动标注，加速人工审核效率",
-      "完成皮肤评估个体基线机制，解决 C2 误触发",
+      "个体基线持续调优并推上线，解决 C2 误触发",
       "与产品、兽医对齐活动/睡觉业务边界与松动判定标准",
     ], PURPLE],
     ["中期", "3-6 个月", [
@@ -900,7 +1003,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.92, y: 6.22, w: 11.4, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: PURPLE_LT,
   });
-  pageNum(s, 14);
+  pageNum(s, 15);
   s.addNotes("下一步我最想解决的是泛化能力问题，这决定了产品能不能面向所有用户的狗。");
 }
 
