@@ -749,10 +749,10 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["9 月", "狗场落实", "商务谈成龙岗，我赴现场考察，确认 6 间犬舍 6 只狗可采", ORANGE_DK],
   ];
 
-  const tlY = 2.0;
+  const tlY = 1.88;
   tl.forEach((t, i) => {
     const x = 0.6 + i * 2.46;
-    card(s, { x, y: tlY, w: 2.32, h: 2.7, fill: PURPLE_XLT });
+    card(s, { x, y: tlY, w: 2.32, h: 2.34, fill: PURPLE_XLT });
     s.addShape(pres.ShapeType.roundRect, {
       x: x + 0.24, y: tlY + 0.22, w: 0.96, h: 0.34, rectRadius: 0.08, fill: { color: t[3] },
     });
@@ -770,32 +770,38 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
 
-  // bottom: two outcome cards
-  card(s, { x: 0.6, y: 4.92, w: 5.94, h: 1.62, fill: PURPLE_DK });
-  s.addText("可采集犬只资源", {
-    x: 0.88, y: 5.1, w: 3.4, h: 0.28, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12, bold: true, color: ORANGE,
+  // bottom: the equipment struggle, and the one piece of initiative that was mine
+  card(s, { x: 0.6, y: 4.44, w: 5.94, h: 2.08, fill: PURPLE_DK });
+  s.addText("设备是自己一步步试出来的", {
+    x: 0.88, y: 4.6, w: 5.4, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 12.5, bold: true, color: ORANGE,
   });
-  s.addText("影棚 2 → 4 只　·　龙岗狗场 6 只已谈妥", {
-    x: 0.9, y: 5.44, w: 5.4, h: 0.28, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11, color: WHITE,
-  });
-  s.addText("长远按 30 → 50 → 70 → 100 → 150 只分阶段扩大", {
-    x: 0.9, y: 5.8, w: 5.4, h: 0.5, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 10, color: PURPLE_LT, lineSpacingMultiple: 1.2,
+  s.addText([
+    { text: "公司自研项圈因新增 GPS、LTE，至今没有成品", options: { bullet: true, breakLine: true } },
+    { text: "老款设备：数据隔天才看得到、电量撑不到 12 小时、时间一天还差好几秒", options: { bullet: true, breakLine: true } },
+    { text: "自己上电商平台选型、反复退换，找到能稳定跑满 24 小时的", options: { bullet: true, breakLine: true } },
+    { text: "改用电脑端时间做基准，不再用设备自带时间，漂移从根上绕开", options: { bullet: true, breakLine: true } },
+    { text: "摄像头也从两款监控换成 USB 直连，画面才真正对得齐", options: { bullet: true } },
+  ], {
+    x: 0.9, y: 4.96, w: 5.4, h: 1.44, isTextBox: true, margin: 0, valign: "top",
+    fontFace: F, fontSize: 10, color: WHITE, paraSpaceAfter: 3, lineSpacingMultiple: 1.15,
   });
 
-  card(s, { x: 6.79, y: 4.92, w: 5.94, h: 1.62, fill: PURPLE_LT });
+  card(s, { x: 6.79, y: 4.44, w: 5.94, h: 2.08, fill: PURPLE_LT });
   s.addText("我主动推动的一件事", {
-    x: 7.07, y: 5.1, w: 3.4, h: 0.28, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12, bold: true, color: PURPLE_DK,
+    x: 7.07, y: 4.6, w: 5.4, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 12.5, bold: true, color: PURPLE_DK,
   });
   s.addText("影棚原有公司的 2 只狗。我发现影棚两位同事各养了一只，提议带来影棚参与测试 —— 公司本身有每月补贴政策，几乎没有额外成本，可采集犬只从 2 只增加到 4 只。", {
-    x: 7.09, y: 5.44, w: 5.4, h: 0.9, isTextBox: true, margin: 0,
+    x: 7.09, y: 4.98, w: 5.4, h: 0.9, isTextBox: true, margin: 0, valign: "top",
     fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
   });
+  s.addText("影棚 2 → 4 只　·　龙岗狗场 6 只已谈妥　·　长远按 30 → 50 → 70 → 100 → 150 只分阶段扩大", {
+    x: 7.09, y: 6.02, w: 5.4, h: 0.4, isTextBox: true, margin: 0, valign: "top",
+    fontFace: F, fontSize: 9.5, color: PURPLE_DK, lineSpacingMultiple: 1.2,
+  });
   pageNum(s, 10);
-  s.addNotes("这里要说清楚分工：狗场是商务去找、去谈的，我提的是数据需求、输出采集方案，并到现场考察确认可行。我自己主动推动的是影棚这条线 —— 发现两位同事各养了一只狗，提议带来参与测试，公司有补贴政策，几乎零成本把犬只从 2 只加到 4 只。");
+  s.addNotes("设备这块可以多讲两句：公司自研项圈因为加了 GPS 和 LTE 一直没出成品，我手上只有老款 TF 卡设备 —— 数据要第二天才看得到，电量撑不过 12 小时得频繁换，时间戳一天还会漂将近 9 秒，画面和数据对不齐就没法标注。后来我自己上电商平台挑设备，来回退换了好几次才找到能稳定跑满 24 小时的；真正解决漂移的办法是改用电脑端时间做基准，不用设备自己的时钟。摄像头也从 TP-Link、小米监控换到 USB 直连才对齐。分工上：狗场是商务去找、去谈的，我提的是数据需求、输出采集方案，并到现场考察确认可行。我自己主动推动的是影棚这条线 —— 发现两位同事各养了一只狗，提议带来参与测试，公司有补贴政策，几乎零成本把犬只从 2 只加到 4 只。");
 }
 
 // =====================================================================
