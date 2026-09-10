@@ -150,40 +150,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: m.sz, bold: true, color: ORANGE, align: "center", valign: "middle",
     });
   });
-  s.addNotes("开场：各位领导、同事好，我是算法岗的朱业拓，英文名 Toky。今天向大家汇报我在试用期内的工作与成果。");
-}
-
-// =====================================================================
-// S2 — 目录
-// =====================================================================
-{
-  const s = pres.addSlide();
-  lightBg(s);
-  pageTitle(s, "CONTENTS", "目录");
-
-  const items = [
-    ["01", "自我介绍与岗位理解", "我是谁，以及我如何理解这个岗位"],
-    ["02", "试用期关键成果", "行为识别 · 皮肤评估 · 算法平台"],
-    ["03", "持续产出的验证", "进度曲线与迭代节奏，证明可持续交付"],
-    ["04", "个人成长与沉淀", "方法论沉淀与认知提升"],
-    ["05", "待提升点与下一步", "短板认知与后续规划"],
-  ];
-
-  items.forEach((it, i) => {
-    const y = 1.72 + i * 1.03;
-    card(s, { x: 0.6, y, w: 12.13, h: 0.86, fill: PURPLE_XLT });
-    badge(s, 0.86, y + 0.15, 0.56, it[0], PURPLE_MD, WHITE, 15);
-    s.addText(it[1], {
-      x: 1.66, y: y + 0.16, w: 4.2, h: 0.32, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 15, bold: true, color: PURPLE_DK,
-    });
-    s.addText(it[2], {
-      x: 1.68, y: y + 0.5, w: 8.6, h: 0.26, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11, color: MUTED,
-    });
-  });
-  pageNum(s, 2);
-  s.addNotes("汇报分五部分，重点是第二部分试用期关键成果。");
+  s.addNotes("开场：各位领导、同事好，我是算法岗的朱业拓，英文名 Toky。今天汇报三部分：试用期做成了什么、怎么证明能持续产出、下一步怎么做。");
 }
 
 // =====================================================================
@@ -252,7 +219,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 12, color: INK, valign: "middle", lineSpacingMultiple: 1.2,
     });
   });
-  pageNum(s, 3);
+  pageNum(s, 2);
   s.addNotes("我把算法岗理解为四件事的闭环：数据、模型、工程、协作。缺任何一环，算法都落不了地。");
 }
 
@@ -331,7 +298,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 7.8, y: 6.66, w: 4.7, h: 0.5, isTextBox: true, margin: 0, valign: "middle",
     fontFace: F, fontSize: 10.5, bold: true, color: PURPLE_DK, align: "right",
   });
-  pageNum(s, 4);
+  pageNum(s, 3);
   s.addNotes("成果汇总成三块：行为识别、皮肤评估、算法平台。行为识别 5 月用模拟数据跑通链路，8 月抓挠识别达到公司定的 85% 目标；皮肤评估 7 月把评分口径谈定，9 月每只狗每天自动出分；算法平台 6 月标注工具就绪，9 月上了 AI 预标注，算法服务也交付后端上线。深色的是每块目前最关键的节点。");
 }
 
@@ -411,7 +378,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.62, y: 6.3, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: MUTED,
   });
-  pageNum(s, 5);
+  pageNum(s, 4);
   s.addNotes("行为识别能分辨四类：抓挠、活动、睡觉、没戴项圈。公司定的 8.31 目标是抓挠准确率不低于 85%，已达成。验证方法是拿没见过的狗测 —— 3 只狗训出来的模型在这 3 只上约 85%，换一只没见过的会掉，把它补进去重训，4 只又回到 85%。所以模型现在是靠见过才准，这也是下一步要加狗的原因。");
 }
 
@@ -489,7 +456,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     fontFace: F, fontSize: 10.5, color: MUTED, lineSpacingMultiple: 1.3,
   });
 
-  pageNum(s, 6);
+  pageNum(s, 5);
   s.addNotes("两条路一起走的原因：规则版是 PM 和兽医定的，解释性好，兽医愿意核对，但上限受限于人能想到的规则；AI 版是把业务规则和兽医临床经验提炼成特征让模型学，上限更高，但要真实病例数据才能训好，现在只用合成数据验证了方案可行。AI 版分两阶段：先用行为数据出一个皮肤等级，如果用户回答了问题、上传了照片，第二阶段再综合判断。但用户互动默认没有，所以多数时候是第一阶段在起作用。");
 }
 
@@ -579,12 +546,12 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     s.addShape(pres.ShapeType.roundRect, {
       x: tx, y: ty, w: tw, h: th, rectRadius: 0.06, fill: { color: PURPLE_DK },
     });
-    if (fs.existsSync(m[0])) fitImage(s, m[0], tx, ty, tw, th, { slide: 13 + i, tooltip: "点击放大" });
+    if (fs.existsSync(m[0])) fitImage(s, m[0], tx, ty, tw, th, { slide: 12 + i, tooltip: "点击放大" });
     // transparent hit area so the whole thumbnail is clickable, not just the image
     s.addShape(pres.ShapeType.roundRect, {
       x: tx, y: ty, w: tw, h: th, rectRadius: 0.06,
       fill: { color: WHITE, transparency: 100 }, line: { type: "none" },
-      hyperlink: { slide: 13 + i, tooltip: "点击放大" },
+      hyperlink: { slide: 12 + i, tooltip: "点击放大" },
     });
     s.addText("点击放大", {
       x: x + 1.84, y: 6.96, w: 3.9, h: 0.24, isTextBox: true, margin: 0,
@@ -600,7 +567,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
 
-  pageNum(s, 7);
+  pageNum(s, 6);
   s.addNotes("现场点开视频播放，另外两项在浏览器里现场演示。重点讲两个机制：AI 预标注让人从「从头标」变成「审核修正」；疑似片段召回把模型最不确定的样本主动推给人工，这两条是标注效率和数据质量的关键。播放控制在 1-2 分钟。");
 }
 
@@ -666,7 +633,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 2.4, y: 5.64, w: 10.1, h: 0.7, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11.5, color: WHITE, valign: "middle", lineSpacingMultiple: 1.25,
   });
-  pageNum(s, 8);
+  pageNum(s, 7);
   s.addNotes("持续产出不是靠某一次冲刺，而是稳定的节奏。16周周报、进度从45%到87%，每周都有实质推进。");
 }
 
@@ -721,7 +688,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
 
-  pageNum(s, 9);
+  pageNum(s, 8);
   s.addNotes("这五件事是我这几个月真正想明白的。可以挑第一条和第四条展开：训练集里拿不准的片段要剔掉，留着反而教错模型；还有自查发现造的测试数据有漏洞会让分数虚高，我主动把分数改低并写进文档 —— 宁可报低，不留隐患。");
 }
 
@@ -782,7 +749,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.92, y: 6.1, w: 11.5, h: 0.8, isTextBox: true, margin: 0, valign: "middle",
     fontFace: F, fontSize: 12.5, color: INK,
   });
-  pageNum(s, 10);
+  pageNum(s, 9);
   s.addNotes("待提升点我按「卡在什么上」分了三类：一类等数据，靠狗场加狗解决；一类等配合，需要测试同事、兽医、产品一起推，这类占了三项；还有一类是我自己要补的业务理解。分清性质才知道该找谁、该做什么。");
 }
 
@@ -840,7 +807,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 3.6, y: 5.58, w: 8.9, h: 0.9, isTextBox: true, margin: 0, valign: "middle",
     fontFace: F, fontSize: 11.5, color: INK, lineSpacingMultiple: 1.3,
   });
-  pageNum(s, 11);
+  pageNum(s, 10);
   s.addNotes("下一步就是这三件事，而且是连着的：狗多了数据才够；模型越准 AI 预标越准，人工审核越来越省；省下来的人力能标更多数据，数据够了就能上深度学习，上限更高。现在数据量还不适合上深度学习，传统方法反而更稳。");
 }
 
@@ -901,12 +868,12 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
   s.addShape(pres.ShapeType.roundRect, {
     x: 11.7, y: 0.26, w: 1.13, h: 0.36, rectRadius: 0.08,
-    fill: { color: PURPLE }, hyperlink: { slide: 7, tooltip: "返回演示页" },
+    fill: { color: PURPLE }, hyperlink: { slide: 6, tooltip: "返回演示页" },
   });
   s.addText("← 返回", {
     x: 11.7, y: 0.26, w: 1.13, h: 0.36, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11, bold: true, color: WHITE,
-    align: "center", valign: "middle", hyperlink: { slide: 7, tooltip: "返回演示页" },
+    align: "center", valign: "middle", hyperlink: { slide: 6, tooltip: "返回演示页" },
   });
   if (fs.existsSync(img)) fitImage(s, img, 0.4, 0.82, 12.53, 6.4);
 });
