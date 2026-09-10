@@ -745,14 +745,14 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     ["5 月", "先用模拟数据", "真实数据还没有，自己造数据把流程跑通", PURPLE_MD],
     ["6 月", "拿到第一批真数据", "影棚开始采集，解决了画面与数据对不齐的老问题", PURPLE],
     ["7 月", "采集流程定型", "方案固定下来，狗增加到 3 只", PURPLE],
-    ["8 月", "为规模化铺路", "输出采集需求方案供商务对接；实地考察沙井，判断成本过高", ORANGE_DK],
-    ["9 月", "狗场落实", "商务谈成龙岗，我赴现场考察，确认 6 间犬舍 6 只狗可采", ORANGE_DK],
+    ["8 月", "为规模化铺路", "输出采集需求方案，推进狗场合作", ORANGE_DK],
+    ["9 月", "狗场落实", "龙岗狗场确认，6 间犬舍 6 只狗可采", ORANGE_DK],
   ];
 
-  const tlY = 1.88;
+  const tlY = 2.06;
   tl.forEach((t, i) => {
     const x = 0.6 + i * 2.46;
-    card(s, { x, y: tlY, w: 2.32, h: 2.34, fill: PURPLE_XLT });
+    card(s, { x, y: tlY, w: 2.32, h: 2.9, fill: PURPLE_XLT });
     s.addShape(pres.ShapeType.roundRect, {
       x: x + 0.24, y: tlY + 0.22, w: 0.96, h: 0.34, rectRadius: 0.08, fill: { color: t[3] },
     });
@@ -770,35 +770,13 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
 
-  // bottom: the equipment struggle, and the one piece of initiative that was mine
-  card(s, { x: 0.6, y: 4.44, w: 5.94, h: 2.08, fill: PURPLE_DK });
-  s.addText("设备是自己一步步试出来的", {
-    x: 0.88, y: 4.6, w: 5.4, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12.5, bold: true, color: ORANGE,
-  });
-  s.addText([
-    { text: "自研项圈至今没有成品，只能用问题很多的老款设备", options: { bullet: true, breakLine: true } },
-    { text: "自己选型、反复退换，并改用电脑端时间做基准，才把采集跑稳", options: { bullet: true } },
-  ], {
-    x: 0.9, y: 5.0, w: 5.4, h: 1.0, isTextBox: true, margin: 0, valign: "top",
-    fontFace: F, fontSize: 11, color: WHITE, paraSpaceAfter: 5, lineSpacingMultiple: 1.2,
+  s.addText("影棚 2 → 4 只　·　龙岗狗场 6 只已谈妥　·　长远按 30 → 50 → 70 → 100 → 150 只分阶段扩大", {
+    x: 0.62, y: 5.5, w: 12.0, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 12, color: PURPLE_DK,
   });
 
-  card(s, { x: 6.79, y: 4.44, w: 5.94, h: 2.08, fill: PURPLE_LT });
-  s.addText("我主动推动的一件事", {
-    x: 7.07, y: 4.6, w: 5.4, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12.5, bold: true, color: PURPLE_DK,
-  });
-  s.addText("影棚两位同事各养了一只狗，我提议带来参与测试 —— 公司有补贴政策，几乎零成本把可采集犬只从 2 只增加到 4 只。", {
-    x: 7.09, y: 5.0, w: 5.4, h: 0.86, isTextBox: true, margin: 0, valign: "top",
-    fontFace: F, fontSize: 11, color: INK, lineSpacingMultiple: 1.25,
-  });
-  s.addText("影棚 2 → 4 只　·　龙岗狗场 6 只已谈妥　·　长远按 30 → 50 → 70 → 100 → 150 只分阶段扩大", {
-    x: 7.09, y: 6.02, w: 5.4, h: 0.4, isTextBox: true, margin: 0, valign: "top",
-    fontFace: F, fontSize: 9.5, color: PURPLE_DK, lineSpacingMultiple: 1.2,
-  });
   pageNum(s, 10);
-  s.addNotes("设备这块可以多讲两句：公司自研项圈因为加了 GPS 和 LTE 一直没出成品，我手上只有老款 TF 卡设备 —— 数据要第二天才看得到，电量撑不过 12 小时得频繁换，时间戳一天还会漂将近 9 秒，画面和数据对不齐就没法标注。后来我自己上电商平台挑设备，来回退换了好几次才找到能稳定跑满 24 小时的；真正解决漂移的办法是改用电脑端时间做基准，不用设备自己的时钟。摄像头也从 TP-Link、小米监控换到 USB 直连才对齐。分工上：狗场是商务去找、去谈的，我提的是数据需求、输出采集方案，并到现场考察确认可行。我自己主动推动的是影棚这条线 —— 发现两位同事各养了一只狗，提议带来参与测试，公司有补贴政策，几乎零成本把犬只从 2 只加到 4 只。");
+  s.addNotes("这条线讲数据是怎么从没有到稳定进来的。设备一直不给力，自研项圈没成品，老款问题多，中间换了几轮设备和摄像头才把采集跑稳 —— 这部分口头补充，片子上不展开。狗场是商务谈的，我出的采集方案并到现场确认可行。");
 }
 
 // =====================================================================
