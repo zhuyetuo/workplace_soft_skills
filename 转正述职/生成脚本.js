@@ -1130,4 +1130,4 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   s.addNotes("感谢各位，欢迎提问。");
 }
 
-pres.writeFile({ fileName: "转正述职报告-朱业拓.pptx" }).then(f => console.log("written:", f));
+pres.writeFile({ fileName: "转正述职报告-Toky.pptx" }).then(f => console.log("written:", f));
