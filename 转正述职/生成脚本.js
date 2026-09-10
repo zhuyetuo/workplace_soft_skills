@@ -712,49 +712,59 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "05  GAPS & PLAN", "待提升点与改进计划");
+  pageTitle(s, "05  GAPS & PLAN", "待提升点：分清卡在什么上");
 
-  s.addText("每一项都有明确的改进路径", {
-    x: 0.62, y: 1.44, w: 11.6, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11.5, color: MUTED,
-  });
-
-  // header row
-  const cols = [[0.6, 3.2, "待提升点"], [3.9, 4.3, "现状与原因"], [8.3, 4.43, "改进计划"]];
-  cols.forEach(c => {
-    s.addText(c[2], {
-      x: c[0] + 0.24, y: 1.9, w: c[1] - 0.4, h: 0.3, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11, bold: true, color: PURPLE_MD,
-    });
-  });
-
-  const gaps = [
-    ["用来训练的狗太少", "只用了 4 只狗训练，换只没见过的狗准确率会下降", "狗场先加 6 只，逐步扩大，每轮拿新狗重新检验"],
-    ["还没经过测试和线上验证", "目前都是我自己测出来的结果", "推动测试同事介入，进入线上验证流程"],
-    ["皮肤评分标准还要校准", "有的狗抓得多但皮肤其实没问题，会误报", "请兽医标注真实病例，用临床数据校准标准"],
-    ["项圈松动检测还没做", "优先级往后排，判定标准也要先和产品、兽医对齐", "标准定了就启动，补齐有效佩戴时长统计"],
-    ["业务理解还不够深", "兽医怎么判断皮肤问题，我还主要靠别人告诉我", "系统补充宠物皮肤健康方面的知识"],
+  const groups = [
+    ["等数据", 0.6, 3.2, PURPLE, [
+      ["用来训练的狗太少", "狗场先加 6 只，按批次继续扩"],
+    ]],
+    ["等配合", 4.06, 5.2, PURPLE_DK, [
+      ["还没经过测试与线上验证", "推动测试同事介入"],
+      ["皮肤评分标准要校准", "请兽医标注真实病例"],
+      ["松动检测还没做", "先和产品、兽医对齐判定标准"],
+    ]],
+    ["靠自己补", 9.52, 3.21, PURPLE_MD, [
+      ["业务理解还不够深", "系统补充宠物皮肤健康知识"],
+    ]],
   ];
 
-  gaps.forEach((g, i) => {
-    const y = 2.24 + i * 0.92;
-    card(s, { x: 0.6, y, w: 12.13, h: 0.82, fill: i % 2 === 0 ? PURPLE_XLT : WHITE, line: i % 2 === 0 ? null : PURPLE_LT });
-    badge(s, 0.84, y + 0.22, 0.38, String(i + 1), PURPLE_MD, WHITE, 11);
-    s.addText(g[0], {
-      x: 1.34, y: y + 0.24, w: 2.7, h: 0.34, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 12, bold: true, color: PURPLE_DK, valign: "middle",
+  groups.forEach(([label, gx, gw, color, items]) => {
+    card(s, { x: gx, y: 1.66, w: gw, h: 4.14, fill: PURPLE_XLT });
+    s.addShape(pres.ShapeType.roundRect, {
+      x: gx + 0.24, y: 1.9, w: 1.5, h: 0.44, rectRadius: 0.08, fill: { color },
     });
-    s.addText(g[1], {
-      x: 4.3, y: y + 0.24, w: 4.1, h: 0.34, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 10.5, color: MUTED, valign: "middle",
+    s.addText(label, {
+      x: gx + 0.24, y: 1.9, w: 1.5, h: 0.44, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 13, bold: true, color: onColor(color),
+      align: "center", valign: "middle",
     });
-    s.addText(g[2], {
-      x: 8.62, y: y + 0.24, w: 4.0, h: 0.34, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 10.5, color: INK, valign: "middle",
+    s.addText(`${items.length} 项`, {
+      x: gx + gw - 1.24, y: 1.9, w: 1.0, h: 0.44, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 12, bold: true, color: PURPLE_MD,
+      align: "right", valign: "middle",
+    });
+
+    items.forEach((it, k) => {
+      const y = 2.58 + k * 1.06;
+      card(s, { x: gx + 0.24, y, w: gw - 0.48, h: 0.9, fill: WHITE });
+      s.addText(it[0], {
+        x: gx + 0.44, y: y + 0.1, w: gw - 0.88, h: 0.32, isTextBox: true, margin: 0,
+        fontFace: F, fontSize: 12.5, bold: true, color: PURPLE_DK,
+      });
+      s.addText("→  " + it[1], {
+        x: gx + 0.44, y: y + 0.46, w: gw - 0.88, h: 0.32, isTextBox: true, margin: 0,
+        fontFace: F, fontSize: 10.5, color: MUTED,
+      });
     });
   });
+
+  card(s, { x: 0.6, y: 6.1, w: 12.13, h: 0.8, fill: PURPLE_LT });
+  s.addText("五项里有三项卡在需要别人配合 —— 这也是我下一步要主动去推的地方。", {
+    x: 0.92, y: 6.1, w: 11.5, h: 0.8, isTextBox: true, margin: 0, valign: "middle",
+    fontFace: F, fontSize: 12.5, color: INK,
+  });
   pageNum(s, 10);
-  s.addNotes("这一页是我对自己短板的判断。泛化能力是当前最需要解决的问题，其他三项也都有明确路径。");
+  s.addNotes("待提升点我按「卡在什么上」分了三类：一类等数据，靠狗场加狗解决；一类等配合，需要测试同事、兽医、产品一起推，这类占了三项；还有一类是我自己要补的业务理解。分清性质才知道该找谁、该做什么。");
 }
 
 // =====================================================================
