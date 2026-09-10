@@ -264,55 +264,55 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   lightBg(s);
   pageTitle(s, "02  KEY RESULTS", "试用期关键成果：从 0 到 1");
 
-  s.addText("入职时这六件事一件都没有，现在都跑通了", {
-    x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11.5, color: MUTED,
+  // the starting point, as one number
+  card(s, { x: 0.6, y: 1.66, w: 3.16, h: 4.86, fill: PURPLE_DK });
+  s.addText("入职时", {
+    x: 0.86, y: 1.96, w: 2.6, h: 0.32, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 13, bold: true, color: ORANGE,
+  });
+  s.addText("0", {
+    x: 0.86, y: 2.4, w: 2.64, h: 2.0, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 104, bold: true, color: WHITE, align: "center", valign: "middle",
+  });
+  s.addText("没有数据\n没有模型\n没有平台", {
+    x: 0.86, y: 4.5, w: 2.64, h: 1.3, isTextBox: true, margin: 0, valign: "top",
+    fontFace: F, fontSize: 14, color: PURPLE_LT, align: "center", lineSpacingMultiple: 1.5,
   });
 
-  // header row
-  const cols = [[0.6, 3.05, "能力项"], [3.75, 3.1, "入职时"], [7.0, 5.73, "现在"]];
-  cols.forEach(c => {
-    s.addText(c[2], {
-      x: c[0] + 0.26, y: 1.9, w: c[1] - 0.4, h: 0.3, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11, bold: true, color: PURPLE_MD,
-    });
-  });
-
-  const rows = [
-    ["看懂狗在干什么", "没有模型，没有数据", "能分辨抓挠、活动、睡觉、没戴项圈"],
-    ["判断皮肤健不健康", "没有方案，也没有判断标准", "每天自动给出每只狗的健康评分"],
-    ["把数据采回来", "没有设备，没有场地", "6 个摄像头 + 12 个项圈，无人值守自动采集"],
-    ["把数据整理好", "没有工具，没有流程", "自建标注平台，AI 先标、多人协同核对"],
-    ["让产品用起来", "无", "已交付后端上线，App 里能看到算法结果"],
-    ["可采集的狗", "影棚 2 只，但没有采集流程", "影棚 4 只，狗场 6 只待进场"],
+  // what exists now
+  const now = [
+    ["行为识别", "4 类", "抓挠 · 活动 · 睡觉 · 没戴项圈"],
+    ["皮肤评估", "每天出分", "每只狗自动跑，不用人算"],
+    ["数据采集", "6 + 12", "摄像头 + 项圈，无人值守"],
+    ["数据标注", "AI 先标", "人只做核对"],
+    ["线上服务", "已上线", "App 里能看到算法结果"],
+    ["可采集的狗", "4 + 6", "影棚 4 只，狗场 6 只待进场"],
   ];
-
-  rows.forEach((r, i) => {
-    const y = 2.28 + i * 0.74;
-    card(s, { x: 0.6, y, w: 12.13, h: 0.64, fill: i % 2 === 0 ? PURPLE_XLT : WHITE, line: i % 2 === 0 ? null : PURPLE_LT });
-    s.addText(r[0], {
-      x: 0.86, y: y + 0.16, w: 2.7, h: 0.32, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 12.5, bold: true, color: PURPLE_DK,
+  now.forEach((it, i) => {
+    const col = i % 3, row = Math.floor(i / 3);
+    const x = 4.06 + col * 2.94;
+    const y = 1.66 + row * 2.52;
+    card(s, { x, y, w: 2.72, h: 2.34, fill: PURPLE_XLT });
+    s.addText(it[0], {
+      x: x + 0.24, y: y + 0.24, w: 2.24, h: 0.28, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11, color: MUTED,
     });
-    s.addText(r[1], {
-      x: 4.0, y: y + 0.18, w: 2.85, h: 0.3, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 10.5, color: MUTED,
+    s.addText(it[1], {
+      x: x + 0.24, y: y + 0.62, w: 2.24, h: 0.7, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 26, bold: true, color: PURPLE_DK,
     });
-    s.addShape(pres.ShapeType.roundRect, {
-      x: 6.86, y: y + 0.24, w: 0.24, h: 0.16, rectRadius: 0.04, fill: { color: ORANGE },
-    });
-    s.addText(r[2], {
-      x: 7.26, y: y + 0.14, w: 5.3, h: 0.38, isTextBox: true, margin: 0, valign: "middle",
-      fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.15,
+    s.addText(it[2], {
+      x: x + 0.24, y: y + 1.42, w: 2.28, h: 0.72, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.25,
     });
   });
 
   s.addText("算法整体进度 45% → 87%，16 周无停滞。", {
-    x: 0.62, y: 6.78, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 10.5, color: MUTED,
+    x: 0.62, y: 6.76, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11, color: MUTED,
   });
   pageNum(s, 4);
-  s.addNotes("这一页是全篇的骨架。我想强调的不是某个具体分数，而是这六件事在我来之前都不存在，现在都跑通了，而且是彼此打通的一条链路。");
+  s.addNotes("这一页是全篇的骨架：入职时算法侧什么都没有，现在这六件事都跑通了，而且是彼此打通的一条链路。");
 }
 
 // =====================================================================
