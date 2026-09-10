@@ -72,6 +72,15 @@ function card(slide, o) {
   });
 }
 
+// fit an image inside a panel without distorting it; letterbox on a dark panel
+function fitImage(slide, imgPath, px, py, pw, ph) {
+  const dim = require("image-size").imageSize(fs.readFileSync(imgPath));
+  const ar = dim.width / dim.height;
+  let w = pw, h = pw / ar;
+  if (h > ph) { h = ph; w = ph * ar; }
+  slide.addImage({ path: imgPath, x: px + (pw - w) / 2, y: py + (ph - h) / 2, w, h });
+}
+
 // numbered badge circle
 function badge(slide, x, y, d, text, bg, fg, size) {
   slide.addShape(pres.ShapeType.ellipse, { x, y, w: d, h: d, fill: { color: bg } });
@@ -615,9 +624,9 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
 
   const demos = [
-    ["media/scratch.png", "抓挠检测效果", "IMU 信号实时推理，视频与识别结果同步比对，可直观看到抓挠片段的检出"],
-    ["media/platform.png", "数据标注平台", "NAS 数据挂载、成员分级权限、视频标注流畅度优化后的实际操作界面"],
-    ["media/tartar.png", "口腔牙结石识别", "基于图像识别犬只口腔牙齿的牙结石情况，为口腔健康评估提供基础能力"],
+    ["media/scratch.png", "抓挠检出与人工确认", "三路画面同步回看，模型预标片段标注置信度 88%，疑似片段 37% 单独列出待确认"],
+    ["media/platform.png", "皮肤评估每日跟踪", "每犬每日自动跑出有效佩戴、抓挠统计、C 值与 S 总分，AI 版与人工版并列对比"],
+    ["media/tartar.png", "口腔牙齿检测", "图片 / 视频 / 摄像头实时三种模式，正常与异常识别置信度 0.91 / 0.92"],
   ];
 
   demos.forEach((dm, i) => {
@@ -627,7 +636,11 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     const frameX = x + 0.22, frameY = 2.12, frameW = 3.47, frameH = 2.34;
     const exists = fs.existsSync(dm[0]);
     if (exists) {
-      s.addImage({ path: dm[0], x: frameX, y: frameY, w: frameW, h: frameH, sizing: { type: "cover", w: frameW, h: frameH } });
+      s.addShape(pres.ShapeType.roundRect, {
+        x: frameX, y: frameY, w: frameW, h: frameH, rectRadius: 0.08,
+        fill: { color: PURPLE_DK },
+      });
+      fitImage(s, dm[0], frameX, frameY, frameW, frameH);
     } else {
       s.addShape(pres.ShapeType.roundRect, {
         x: frameX, y: frameY, w: frameW, h: frameH, rectRadius: 0.08,
