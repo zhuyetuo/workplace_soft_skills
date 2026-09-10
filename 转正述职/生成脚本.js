@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE"; // 13.33 x 7.5
-pres.author = "Toky|朱业拓";
+pres.author = "Toky 朱业拓";
 pres.company = "HICC Pet";
 pres.title = "转正述职报告";
 
@@ -112,9 +112,11 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.85, y: 4.24, w: 5.55, h: 1.22, rectRadius: 0.1,
     fill: { color: PURPLE, transparency: 35 },
   });
-  s.addText("Toky|朱业拓", {
-    x: 1.12, y: 4.44, w: 3.2, h: 0.4, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 19, bold: true, color: WHITE,
+  s.addText([
+    { text: "Toky", options: { fontSize: 20, bold: true, color: WHITE } },
+    { text: "  朱业拓", options: { fontSize: 13, bold: false, color: PURPLE_LT } },
+  ], {
+    x: 1.12, y: 4.4, w: 3.4, h: 0.52, isTextBox: true, margin: 0, fontFace: F,
   });
   s.addText("算法工程师", {
     x: 1.14, y: 4.9, w: 3.2, h: 0.3, isTextBox: true, margin: 0,
@@ -192,9 +194,11 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 
   // left: profile
   card(s, { x: 0.6, y: 1.66, w: 4.5, h: 4.9, fill: PURPLE_DK });
-  s.addText("Toky|朱业拓", {
-    x: 0.92, y: 1.98, w: 3.9, h: 0.52, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 21, bold: true, color: WHITE,
+  s.addText([
+    { text: "Toky", options: { fontSize: 22, bold: true, color: WHITE } },
+    { text: "  朱业拓", options: { fontSize: 14, bold: false, color: PURPLE_LT } },
+  ], {
+    x: 0.92, y: 1.94, w: 3.9, h: 0.62, isTextBox: true, margin: 0, fontFace: F,
   });
   s.addText("算法工程师", {
     x: 0.94, y: 2.46, w: 3.9, h: 0.3, isTextBox: true, margin: 0,
@@ -1100,9 +1104,12 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     x: 0.87, y: 3.6, w: 7.0, h: 0.44, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 19, color: ORANGE, charSpacing: 5,
   });
-  s.addText("Toky|朱业拓　　用户增长研发部 · 算法工程师　　2026.10.08", {
-    x: 0.87, y: 4.42, w: 8.0, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12, color: PURPLE_LT,
+  s.addText([
+    { text: "Toky", options: { fontSize: 13, bold: true, color: WHITE } },
+    { text: " 朱业拓", options: { fontSize: 10.5, color: PURPLE_LT } },
+    { text: "　　用户增长研发部 · 算法工程师　　2026.10.08", options: { fontSize: 11.5, color: PURPLE_LT } },
+  ], {
+    x: 0.87, y: 4.4, w: 9.0, h: 0.34, isTextBox: true, margin: 0, fontFace: F,
   });
   s.addText("Health Innovation for a Clean & Comfortable Life", {
     x: 0.87, y: 6.5, w: 8, h: 0.3, isTextBox: true, margin: 0,
