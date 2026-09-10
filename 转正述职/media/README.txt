@@ -9,6 +9,6 @@ scratch.mp4 是标注审核工作台录屏，现场演示直接播放即可。
 
 生成方式：
   node 生成脚本.js
-  python3 postbuild.py "转正述职报告-Toky.pptx" media/poster.png 18,19
+  python3 postbuild.py "转正述职报告-Toky.pptx" media/poster.png 14,15
 
 postbuild 用来把 pptxgenjs 的灰色播放占位图换成 poster.png（视频真实画面）。
