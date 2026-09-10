@@ -73,12 +73,14 @@ function card(slide, o) {
 }
 
 // fit an image inside a panel without distorting it; letterbox on a dark panel
-function fitImage(slide, imgPath, px, py, pw, ph) {
+function fitImage(slide, imgPath, px, py, pw, ph, hyperlink) {
   const dim = require("image-size").imageSize(fs.readFileSync(imgPath));
   const ar = dim.width / dim.height;
   let w = pw, h = pw / ar;
   if (h > ph) { h = ph; w = ph * ar; }
-  slide.addImage({ path: imgPath, x: px + (pw - w) / 2, y: py + (ph - h) / 2, w, h });
+  const o = { path: imgPath, x: px + (pw - w) / 2, y: py + (ph - h) / 2, w, h };
+  if (hyperlink) o.hyperlink = hyperlink;
+  slide.addImage(o);
 }
 
 // numbered badge circle
@@ -700,7 +702,17 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     s.addShape(pres.ShapeType.roundRect, {
       x: tx, y: ty, w: tw, h: th, rectRadius: 0.06, fill: { color: PURPLE_DK },
     });
-    if (fs.existsSync(m[0])) fitImage(s, m[0], tx, ty, tw, th);
+    if (fs.existsSync(m[0])) fitImage(s, m[0], tx, ty, tw, th, { slide: 17 + i, tooltip: "点击放大" });
+    // transparent hit area so the whole thumbnail is clickable, not just the image
+    s.addShape(pres.ShapeType.roundRect, {
+      x: tx, y: ty, w: tw, h: th, rectRadius: 0.06,
+      fill: { color: WHITE, transparency: 100 }, line: { type: "none" },
+      hyperlink: { slide: 17 + i, tooltip: "点击放大" },
+    });
+    s.addText("点击放大", {
+      x: x + 2.42, y: 6.58, w: 3.36, h: 0.24, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 9, color: PURPLE_MD,
+    });
     s.addText(m[1], {
       x: x + 2.42, y: 5.76, w: 3.36, h: 0.3, isTextBox: true, margin: 0,
       fontFace: F, fontSize: 12.5, bold: true, color: PURPLE_DK,
@@ -1109,5 +1121,30 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
   s.addNotes("感谢各位，欢迎提问。");
 }
+
+// =====================================================================
+// A1 / A2 — 放大页（隐藏，从演示页点击缩略图进入）
+// =====================================================================
+[
+  ["media/platform.png", "皮肤评估每日跟踪"],
+  ["media/tartar.png", "口腔牙齿检测"],
+].forEach(([img, title]) => {
+  const s = pres.addSlide();
+  s.background = { color: PURPLE_DK };
+  s.addText(title, {
+    x: 0.5, y: 0.26, w: 7, h: 0.36, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 15, bold: true, color: WHITE,
+  });
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 11.7, y: 0.26, w: 1.13, h: 0.36, rectRadius: 0.08,
+    fill: { color: PURPLE }, hyperlink: { slide: 9, tooltip: "返回演示页" },
+  });
+  s.addText("← 返回", {
+    x: 11.7, y: 0.26, w: 1.13, h: 0.36, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11, bold: true, color: WHITE,
+    align: "center", valign: "middle", hyperlink: { slide: 9, tooltip: "返回演示页" },
+  });
+  if (fs.existsSync(img)) fitImage(s, img, 0.4, 0.82, 12.53, 6.4);
+});
 
 pres.writeFile({ fileName: "转正述职报告-Toky.pptx" }).then(f => console.log("written:", f));

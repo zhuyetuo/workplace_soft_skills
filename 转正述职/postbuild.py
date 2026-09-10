@@ -1,72 +1,118 @@
 #!/usr/bin/env python3
-"""Swap pptxgenjs's grey play-button placeholder for a real poster frame.
+"""Post-process the generated deck for things pptxgenjs cannot express.
 
-pptxgenjs has no poster option for addMedia, so every embedded video ships with
-a generic grey placeholder. This locates the poster image belonging to each
-embedded video (via the <p:pic> that carries the videoFile reference) and
-replaces that part with media/poster.png.
+1. Swap the grey play-button placeholder for a real poster frame.
+2. Mark the blow-up slides hidden, so they are reachable only by the
+   thumbnail hyperlinks and never appear in the normal run.
+3. Set embedded video to play full screen (needs a <p:timing> tree, which
+   pptxgenjs does not emit).
 
-Usage: python3 postbuild.py deck.pptx media/poster.png
+Usage: python3 postbuild.py deck.pptx media/poster.png [hidden_slide_numbers]
+       e.g. python3 postbuild.py deck.pptx media/poster.png 17,18
 """
 import re
 import shutil
 import sys
 import zipfile
 
-import defusedxml.minidom  # noqa: F401  (kept: parsing OOXML elsewhere needs the safe parser)
+TIMING = (
+    '<p:timing><p:tnLst><p:par><p:cTn id="1" dur="indefinite" restart="never" '
+    'nodeType="tmRoot"><p:childTnLst><p:seq concurrent="1" nextAc="seek">'
+    '<p:cTn id="2" dur="indefinite" nodeType="mainSeq"><p:childTnLst/></p:cTn>'
+    '<p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl>'
+    '</p:cond></p:prevCondLst><p:nextCondLst><p:cond evt="onNext" delay="0">'
+    '<p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst></p:seq>'
+    '<p:video><p:cMediaNode vol="80000" fullScrn="1"><p:cTn id="3" fill="hold" '
+    'display="0"><p:stCondLst><p:cond delay="indefinite"/></p:stCondLst></p:cTn>'
+    '<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cMediaNode></p:video>'
+    '</p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>'
+)
 
 
-def find_poster_parts(z):
-    """Return the set of zip part names used as poster images for videos."""
-    posters = set()
-    for name in z.namelist():
+def poster_parts(payload):
+    """Zip part names used as poster images for embedded videos."""
+    out = set()
+    for name, data in payload.items():
         m = re.fullmatch(r"ppt/slides/slide(\d+)\.xml", name)
         if not m:
             continue
-        slide = z.read(name).decode("utf-8")
-        rels_name = f"ppt/slides/_rels/slide{m.group(1)}.xml.rels"
+        slide = data.decode("utf-8")
         try:
-            rels = z.read(rels_name).decode("utf-8")
+            rels = payload[f"ppt/slides/_rels/slide{m.group(1)}.xml.rels"].decode("utf-8")
         except KeyError:
             continue
-        rel_target = dict(
-            re.findall(r'Id="([^"]+)"[^>]*Target="([^"]+)"', rels)
-        )
-        # each <p:pic> holding <a:videoFile> also holds the poster in <a:blip r:embed>
+        targets = dict(re.findall(r'Id="([^"]+)"[^>]*Target="([^"]+)"', rels))
         for pic in re.findall(r"<p:pic>.*?</p:pic>", slide, re.S):
             if "videoFile" not in pic:
                 continue
             embed = re.search(r'<a:blip[^>]*r:embed="([^"]+)"', pic)
             if not embed:
                 continue
-            target = rel_target.get(embed.group(1), "")
-            if target.startswith("../"):
-                target = "ppt/" + target[3:]
-            posters.add(target)
-    return posters
+            t = targets.get(embed.group(1), "")
+            out.add("ppt/" + t[3:] if t.startswith("../") else t)
+    return out
 
 
-def main(deck, poster):
+def set_video_fullscreen(payload):
+    """Append a timing tree marking each embedded video as full-screen playback."""
+    done = []
+    for name in list(payload):
+        if not re.fullmatch(r"ppt/slides/slide\d+\.xml", name):
+            continue
+        slide = payload[name].decode("utf-8")
+        if "videoFile" not in slide or "<p:timing>" in slide:
+            continue
+        pic = re.search(r"<p:pic>(?:(?!</p:pic>).)*videoFile(?:(?!</p:pic>).)*</p:pic>", slide, re.S)
+        if not pic:
+            continue
+        spid = re.search(r'<p:cNvPr[^>]*id="(\d+)"', pic.group(0))
+        if not spid:
+            continue
+        slide = slide.replace("</p:sld>", TIMING.format(spid=spid.group(1)) + "</p:sld>")
+        payload[name] = slide.encode("utf-8")
+        done.append(name)
+    return done
+
+
+def hide_slides(payload, numbers):
+    done = []
+    for n in numbers:
+        key = f"ppt/slides/slide{n}.xml"
+        if key not in payload:
+            continue
+        s = payload[key].decode("utf-8")
+        if 'show="0"' in s:
+            continue
+        s = re.sub(r"(<p:sld\b[^>]*?)(\s*>)", r'\1 show="0"\2', s, count=1)
+        payload[key] = s.encode("utf-8")
+        done.append(n)
+    return done
+
+
+def main(deck, poster, hidden):
     with zipfile.ZipFile(deck) as z:
-        parts = find_poster_parts(z)
-        if not parts:
-            print("no embedded video poster found; nothing to do")
-            return
         items = z.infolist()
         payload = {i.filename: z.read(i.filename) for i in items}
 
     with open(poster, "rb") as fh:
         poster_bytes = fh.read()
-    for p in parts:
+    posters = poster_parts(payload)
+    for p in posters:
         payload[p] = poster_bytes
+
+    vids = set_video_fullscreen(payload)
+    hid = hide_slides(payload, hidden)
 
     tmp = deck + ".tmp"
     with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as out:
         for i in items:
             out.writestr(i, payload[i.filename])
     shutil.move(tmp, deck)
-    print(f"replaced {len(parts)} video poster(s): {', '.join(sorted(parts))}")
+    print(f"poster: {len(posters)} | fullscreen video: {len(vids)} | hidden slides: {hid}")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    nums = []
+    if len(sys.argv) > 3:
+        nums = [int(x) for x in sys.argv[3].split(",") if x.strip()]
+    main(sys.argv[1], sys.argv[2], nums)
