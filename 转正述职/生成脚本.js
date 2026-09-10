@@ -845,7 +845,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     fontFace: F, fontSize: 13, bold: true, color: ORANGE,
   });
   const props = [
-    ["1 天做出口腔识别原型", "产品提出这个方向后，当天做出可用原型，验证了这条路走不走得通", true],
+    ["做出口腔识别 Web Demo", "产品提出这个方向后，做出可用的 Web Demo，验证了这条路走不走得通", true],
     ["质疑现有判断标准", "实测一晚抓挠 10-20 次但皮肤没问题，提出标准需要重新调研", false],
     ["建议对标竞品", "建议买竞品实测，让狗同时戴上对比效果", false],
     ["推动规范立项", "算法只有一人也应正式立项，明确目标与验收标准", false],
