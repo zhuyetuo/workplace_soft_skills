@@ -251,115 +251,130 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 }
 
 // =====================================================================
-// S4 — 成果总览（数据看板）
+// S4 — 成果总览：从 0 到 1
 // =====================================================================
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02  KEY RESULTS", "试用期关键成果总览");
+  pageTitle(s, "02  KEY RESULTS", "试用期关键成果：从 0 到 1");
 
-  s.addText("从「无数据、无模型、无平台」起步，到算法能力成型、服务上线、数据体系跑通", {
-    x: 0.62, y: 1.44, w: 11.4, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12, color: MUTED,
+  s.addText("入职时算法侧没有数据、没有模型、没有平台。试用期的主线是把这条路蹚出来 —— 每一环都从无到有跑通", {
+    x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11.5, color: MUTED,
   });
 
-  const stats = [
-    ["45% → 87%", "算法整体进度", "16 周持续推进，无停滞", PURPLE],
-    ["70% → 90%", "抓挠识别准确率", "8.31 目标 ≥85%，提前 4 周达成", ORANGE_DK],
-    ["7.8 万行", "自建系统代码", "采集 / 平台 / 训练 / 服务 四套系统", PURPLE_MD],
-    ["128 个", "平台 API 接口", "23 张数据表，自研平台替代 Label Studio", PURPLE],
-    ["2 套", "皮肤评估方案", "SBS 规则引擎 + 两阶段 ML 双模型", ORANGE_DK],
-    ["0 → 4+6", "可采集犬只资源", "影棚 4 只 + 龙岗狗场 6 只落地", PURPLE_MD],
+  // header row
+  const cols = [[0.6, 3.05, "能力项"], [3.75, 3.1, "入职时"], [7.0, 5.73, "现在"]];
+  cols.forEach(c => {
+    s.addText(c[2], {
+      x: c[0] + 0.26, y: 1.9, w: c[1] - 0.4, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11, bold: true, color: PURPLE_MD,
+    });
+  });
+
+  const rows = [
+    ["行为识别", "无模型，无标注数据", "抓挠 / 活动 / 睡觉 / 未佩戴 四类可用，稳定版 v2 已在算法侧验证"],
+    ["皮肤健康评估", "只有一份待定的评分方案", "规则版与 ML 版闭环跑通，每犬每日自动出结果，路径已验证可行"],
+    ["数据采集", "无设备、无场地、无流程", "6 机位 × 12 设备无人值守采集，视频与 IMU 帧级同步"],
+    ["标注体系", "无工具，无流程，无人手", "自研平台上线，AI 预标注 + 多人协同审核，标注质量可追溯"],
+    ["在线服务", "无", "已交付后端并完成外网部署，App → 后端 → 算法全链路跑通"],
+    ["可采集犬只", "0 只", "影棚 4 只（大 / 中 / 小），龙岗狗场 6 只已谈妥待进场"],
   ];
 
-  stats.forEach((st, i) => {
-    const col = i % 3, row = Math.floor(i / 3);
-    const x = 0.6 + col * 4.11;
-    const y = 1.94 + row * 2.36;
-    card(s, { x, y, w: 3.91, h: 2.16, fill: PURPLE_XLT });
-    s.addText(st[0], {
-      x: x + 0.28, y: y + 0.28, w: 3.4, h: 0.66, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 30, bold: true, color: st[3],
+  rows.forEach((r, i) => {
+    const y = 2.28 + i * 0.74;
+    card(s, { x: 0.6, y, w: 12.13, h: 0.64, fill: i % 2 === 0 ? PURPLE_XLT : WHITE, line: i % 2 === 0 ? null : PURPLE_LT });
+    s.addText(r[0], {
+      x: 0.86, y: y + 0.16, w: 2.7, h: 0.32, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 12.5, bold: true, color: PURPLE_DK,
     });
-    s.addText(st[1], {
-      x: x + 0.3, y: y + 1.04, w: 3.4, h: 0.32, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 14, bold: true, color: PURPLE_DK,
+    s.addText(r[1], {
+      x: 4.0, y: y + 0.18, w: 2.85, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 10.5, color: MUTED,
     });
-    s.addText(st[2], {
-      x: x + 0.3, y: y + 1.42, w: 3.4, h: 0.5, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 10.5, color: MUTED, lineSpacingMultiple: 1.2,
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 6.86, y: y + 0.24, w: 0.24, h: 0.16, rectRadius: 0.04, fill: { color: ORANGE },
+    });
+    s.addText(r[2], {
+      x: 7.26, y: y + 0.14, w: 5.3, h: 0.38, isTextBox: true, margin: 0, valign: "middle",
+      fontFace: F, fontSize: 10.5, color: INK, lineSpacingMultiple: 1.15,
     });
   });
+
+  s.addText("算法整体进度由入职时的 45% 推进到 87%，16 周持续投入，无停滞周。", {
+    x: 0.62, y: 6.78, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 10.5, color: MUTED,
+  });
   pageNum(s, 4);
-  s.addNotes("这一页是总览。六个数字概括试用期：进度、模型指标、能力覆盖、工程攻坚、方案产出、数据资源。");
+  s.addNotes("这一页是全篇的骨架。我想强调的不是某个具体分数，而是这六件事在我来之前都不存在，现在都跑通了，而且是彼此打通的一条链路。");
 }
 
 // =====================================================================
-// S5 — 抓挠识别：从 0 到达标
+// S5 — 行为识别：能力建立与泛化验证方法
 // =====================================================================
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.1  CORE MODEL", "核心成果一：抓挠识别模型，从 0 到超额达标");
+  pageTitle(s, "02.1  CORE MODEL", "核心成果一：行为识别从 0 到可用，并建立泛化验证方法");
 
-  const chartData = [
-    { name: "抓挠识别 F1", labels: ["7.20 初版", "7.27 迭代", "8.03 达标", "8.24 全量复核"], values: [72, 80, 85, 90] },
-    { name: "8.31 目标线 85%", labels: ["7.20 初版", "7.27 迭代", "8.03 达标", "8.24 全量复核"], values: [85, 85, 85, 85] },
+  s.addText("模型能不能用，不看它在训练过的狗身上多准，而看它在没见过的狗身上掉多少", {
+    x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11.5, color: MUTED,
+  });
+
+  const steps = [
+    ["01", "初版模型", "基于影棚 3 只犬的数据训练", [
+      "训练涉及的 3 只犬：准确率约 85%",
+      "马尔济斯（全新个体，未参与训练）：约 75%，且误报明显偏多",
+    ], PURPLE_MD],
+    ["02", "补充新个体后重训", "把马尔济斯数据纳入训练，产出稳定版 v2", [
+      "4 只犬准确率回到 85% 上下，误报收敛",
+      "但这恰恰说明：模型是靠「见过」才准的",
+    ], PURPLE],
+    ["03", "由此得出的结论", "4 只犬支撑不起面向线上用户的通用模型", [
+      "每引入一个新个体，都是一次真实的泛化检验",
+      "个体覆盖不足时，新用户的狗大概率落在 75% 那一档",
+    ], ORANGE_DK],
   ];
-  s.addChart(pres.ChartType.line, chartData, {
-    x: 0.6, y: 1.66, w: 7.45, h: 3.48,
-    chartColors: [PURPLE, ORANGE],
-    lineDataSymbol: "circle", lineDataSymbolSize: 7, lineSize: 3,
-    showTitle: false, showLegend: true, legendPos: "b", legendFontSize: 10, legendColor: MUTED,
-    showValue: true, dataLabelPosition: "t", dataLabelFontSize: 11,
-    dataLabelColor: PURPLE_DK, dataLabelFormatCode: '0"%"',
-    valAxisMinVal: 60, valAxisMaxVal: 100,
-    catAxisLabelColor: MUTED, catAxisLabelFontSize: 10,
-    valAxisLabelColor: MUTED, valAxisLabelFontSize: 10,
-    valGridLine: { color: "EEEBF7", size: 1 },
-    catGridLine: { style: "none" },
-  });
 
-  // right rail milestones
-  const ms = [
-    ["起点", "7.20 初版模型 F1 70-75%", "首次产出可用模型，拿到真实误检分布"],
-    ["方法", "按置信度分层复核误检 / 漏检", "以模型结果反哺数据集，定向补负样本"],
-    ["达标", "8.03 F1 ≥85%，提前 4 周", "8.31 目标提前完成"],
-    ["深化", "8.24 全量复核后训练犬达 90%", "工程化检测人工标注错误并重标注"],
-  ];
-  ms.forEach((m, i) => {
-    const y = 1.66 + i * 0.9;
-    card(s, { x: 8.32, y, w: 4.41, h: 0.76, fill: i === 2 ? PURPLE_LT : PURPLE_XLT });
-    s.addShape(pres.ShapeType.roundRect, {
-      x: 8.54, y: y + 0.1, w: 0.72, h: 0.24, rectRadius: 0.06,
-      fill: { color: i === 2 ? ORANGE_DK : PURPLE_MD },
+  steps.forEach((st, i) => {
+    const x = 0.6 + i * 4.11;
+    card(s, { x, y: 1.88, w: 3.91, h: 2.64, fill: i === 2 ? PURPLE_DK : PURPLE_XLT });
+    const dark = i === 2;
+    badge(s, x + 0.26, 2.1, 0.46, st[0], st[4], WHITE, 12);
+    s.addText(st[1], {
+      x: x + 0.86, y: 2.14, w: 2.9, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 13, bold: true, color: dark ? WHITE : PURPLE_DK,
     });
-    s.addText(m[0], {
-      x: 8.54, y: y + 0.1, w: 0.72, h: 0.24, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 9.5, bold: true, color: i === 2 ? PURPLE_DK : WHITE, align: "center", valign: "middle",
+    s.addText(st[2], {
+      x: x + 0.3, y: 2.66, w: 3.32, h: 0.44, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 10, color: dark ? PURPLE_LT : MUTED, lineSpacingMultiple: 1.15,
     });
-    s.addText(m[1], {
-      x: 9.4, y: y + 0.09, w: 3.15, h: 0.26, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 11, bold: true, color: PURPLE_DK,
-    });
-    s.addText(m[2], {
-      x: 8.56, y: y + 0.4, w: 4.0, h: 0.3, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 9.5, color: i === 2 ? PURPLE_DK : MUTED,
+    s.addText(st[3].map((t, k) => ({
+      text: t, options: { bullet: true, breakLine: k !== st[3].length - 1 },
+    })), {
+      x: x + 0.3, y: 3.2, w: 3.32, h: 1.6, isTextBox: true, margin: 0, valign: "top",
+      fontFace: F, fontSize: 10, color: dark ? WHITE : INK,
+      paraSpaceAfter: 6, lineSpacingMultiple: 1.2,
     });
   });
 
-  // bottom insight strip
-  card(s, { x: 0.6, y: 5.42, w: 12.13, h: 1.06, fill: PURPLE_DK });
-  s.addText("关键做法", {
-    x: 0.88, y: 5.62, w: 1.5, h: 0.28, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11, bold: true, color: ORANGE,
+  card(s, { x: 0.6, y: 4.8, w: 12.13, h: 1.3, fill: PURPLE_LT });
+  s.addText("验证方法", {
+    x: 0.88, y: 5.06, w: 1.8, h: 0.28, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 11, bold: true, color: PURPLE_DK,
   });
-  s.addText("不盲目堆数据 —— 用模型输出反推数据缺口：按置信度区间分析误识别（走路、跑、扒门被误判），定向补充负样本；再用工程化手段批量检出人工标注错误并重标注。数据质量的提升比数据量的增长更能带来实质效果。", {
-    x: 2.4, y: 5.58, w: 10.1, h: 0.74, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11.5, color: WHITE, valign: "middle", lineSpacingMultiple: 1.25,
+  s.addText("持续用「少量个体训练出的模型」去测全新样本，观察准确率与误报的变化 —— 这是检验通用性与鲁棒性最直接的手段。下一步先在狗场加 6 只（1-2 周），跑完再继续扩，每一轮都重复这个验证。", {
+    x: 2.66, y: 4.98, w: 9.86, h: 0.94, isTextBox: true, margin: 0, valign: "middle",
+    fontFace: F, fontSize: 11.5, color: INK, lineSpacingMultiple: 1.25,
+  });
+
+  s.addText("说明：以上为算法侧使用自建数据集的测试结果，尚未经测试团队验收，也未在线上用户环境验证。", {
+    x: 0.62, y: 6.3, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 10, color: MUTED, italic: true,
   });
   pageNum(s, 5);
-  s.addNotes("这是试用期最核心的算法成果。8月31日的目标是F1≥85%，我在8月3日提前四周达成，随后通过全量复核把训练个体上的准确率推到90%。");
+  s.addNotes("这一页我不想强调分数。要讲清楚的是：3 只狗训出来的模型在这 3 只身上 85%，换一只没见过的马尔济斯就掉到 75% 且误报变多；把它的数据加进去重训，4 只又回到 85%。这说明模型现在是靠见过才准，4 只狗的覆盖量远不足以推给线上用户。所以我建立的方法是持续用新个体做泛化检验，狗场先加 6 只。如果被问到具体数字，说明这是算法侧数据集测试，还没经过测试同事验收。");
 }
 
 // =====================================================================
@@ -376,7 +391,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     fontFace: F, fontSize: 15, bold: true, color: PURPLE_DK,
   });
   const beh = [
-    ["抓挠识别", "已达标，训练个体 F1 90%", ORANGE_DK, "达标"],
+    ["抓挠识别", "稳定版 v2，4 只犬算法侧验证可用", PURPLE, "可用"],
     ["活动检测", "基础可用 80%+", PURPLE_MD, "可用"],
     ["睡觉 / 休息", "基础可用 80%+", PURPLE_MD, "可用"],
     ["未佩戴检测", "已训练为独立类别，线上服务待接入", PURPLE_MD, "已训练"],
@@ -402,7 +417,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
 
   // right: skin assessment dual track
-  s.addText("皮肤健康评估：双方案并行推进", {
+  s.addText("皮肤健康评估：从 0 到跑通闭环", {
     x: 6.94, y: 1.62, w: 6, h: 0.32, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 15, bold: true, color: PURPLE_DK,
   });
@@ -429,7 +444,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   s.addText([
     { text: "模型 A：44 特征 → C0 / C1 / C2，每日自动运行", options: { bullet: true, breakLine: true } },
     { text: "模型 B：54 特征（含问答）→ S0 / S1 / S2", options: { bullet: true, breakLine: true } },
-    { text: "86 场景合成数据，交叉验证宏 F1 0.93 / 0.90（真实数据待验证）", options: { bullet: true, breakLine: true } },
+    { text: "合成数据上已验证方案可行，真实数据到位后即可二次训练", options: { bullet: true, breakLine: true } },
     { text: "个体基线三套实现并行，内部每日运行、边跑边调优", options: { bullet: true } },
   ], {
     x: 7.2, y: 4.34, w: 5.3, h: 1.28, isTextBox: true, margin: 0, valign: "top",
@@ -438,11 +453,11 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 
   // bottom insight
   card(s, { x: 0.6, y: 5.86, w: 12.13, h: 0.86, fill: PURPLE_LT });
-  s.addText("真实验证发现的关键问题", {
+  s.addText("当前状态与判断", {
     x: 0.88, y: 6.0, w: 2.5, h: 0.28, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11, bold: true, color: PURPLE_DK,
   });
-  s.addText("4 只犬 5 天测试中，两只犬日均抓挠 20+ 次触发 C2，但皮肤无实际病变 —— 说明个体「正常抓挠水平」本就存在差异。据此引入个体基线机制并已落地运行，比单纯调权重更根本；目前内部每日跟踪、边跑边调优，暂未上线。", {
+  s.addText("链路已跑通、每日自动出结果，方向基本验证可行。当前评分阈值仍会误触发（抓挠确实多，但皮肤无可见病变），根因是「抓挠强度 → 皮肤病变」这一步缺临床数据校准。路子已摸清，等兽医标注数据到位即可收敛。", {
     x: 3.5, y: 5.98, w: 9.0, h: 0.62, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: INK, valign: "middle", lineSpacingMultiple: 1.2,
   });
@@ -456,33 +471,33 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "02.3  SYSTEMS", "核心成果三：四个自建系统，约 7.8 万行代码");
+  pageTitle(s, "02.3  SYSTEMS", "核心成果三：四套系统自建，全链路打通");
 
-  s.addText("试用期内从零搭起采集、平台、训练、服务四套系统，彼此打通，构成算法可持续迭代的完整基础设施", {
+  s.addText("从零搭起采集、平台、训练、服务四套系统，彼此打通 —— 算法能自己转起来，靠的是这条链路而不是单个模型", {
     x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 11.5, color: MUTED,
   });
 
   const sys = [
-    ["采集与同步", "witmotion_imu", "1.3 万行", [
+    ["采集与同步", "witmotion_imu", "数据入口", [
       "N 路摄像头 × M 个 IMU 帧级同步，现场 6 机位 / 12 设备无人值守运行",
       "单一时钟 + IMU 事件驱动取帧 + 墙钟时间戳变帧率写入，同步由构造保证",
       "自研 HICC 项圈 0x55AA 协议解析（含校验与授时），兼容 WitMotion 双帧格式",
     ], true],
-    ["标注与训练平台", "label_infra / smart-label", "3.0 万行", [
-      "自研平台替代 Label Studio，迁移 58 个项目 / 2,088 任务 / 2,609 条标注",
-      "128 个 API、23 张表、31 次数据库迁移；React + FastAPI + MySQL",
+    ["标注与训练平台", "label_infra / smart-label", "数据加工", [
+      "标注任务分发、认领、审核、复核全流程，分级权限与数据隔离",
+      "自研平台替代 Label Studio，历史标注数据完整迁移",
       "AI 预标注 → 疑似片段召回 → 多人协同审核 → 导出训练 → 模型热切换闭环",
     ], false],
-    ["模型训练与皮肤评估", "imu_train", "2.7 万行", [
-      "193 维手工特征；13 种模型实现（6 种深度 + 7 种经典）可横向对比",
-      "事件级 F1e 指标自研实现，网格搜索置信阈值与合并间隔",
+    ["模型训练与皮肤评估", "imu_train", "模型产出", [
+      "多种模型架构可横向对比，特征工程与评测流程标准化",
+      "事件级评测指标自研实现，能看出「一次抓挠被切成几段」这类错误",
       "皮肤评估三条技术路线：SBS 规则引擎 / 两阶段 ML / 分层贝叶斯",
     ], false],
-    ["在线推理与评估", "algo_service", "0.8 万行", [
+    ["在线推理与评估", "algo_service", "线上落地", [
       "15 秒增量推理 + 每日批量评估 + 每日基线更新，三条调度链路",
       "TDengine 时序库 + MySQL 按设备分表，按用户本地时区切天",
-      "133 个单元测试 / 约 162 条用例，不依赖外部服务即可运行",
+      "单元测试覆盖特征、评分、基线等核心逻辑，不依赖外部服务即可跑",
       "已交付后端并完成外网部署，App → 后端 → 算法全链路跑通",
     ], false],
   ];
@@ -499,11 +514,11 @@ function badge(slide, x, y, d, text, bg, fg, size) {
       fontFace: F, fontSize: 13.5, bold: true, color: dark ? WHITE : PURPLE_DK,
     });
     s.addShape(pres.ShapeType.roundRect, {
-      x: x + 4.62, y: y + 0.2, w: 1.06, h: 0.3, rectRadius: 0.07,
+      x: x + 4.5, y: y + 0.2, w: 1.18, h: 0.3, rectRadius: 0.07,
       fill: { color: dark ? ORANGE : PURPLE_MD },
     });
     s.addText(sy[2], {
-      x: x + 4.62, y: y + 0.2, w: 1.06, h: 0.3, isTextBox: true, margin: 0,
+      x: x + 4.5, y: y + 0.2, w: 1.18, h: 0.3, isTextBox: true, margin: 0,
       fontFace: F, fontSize: 10, bold: true,
       color: dark ? PURPLE_DK : WHITE, align: "center", valign: "middle",
     });
@@ -520,7 +535,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
     });
   });
 
-  s.addText("另有约 2 万行设计文档：系统设计、临床量表设计、数据异常处理预案、标注规范、ML 迁移方案等", {
+  s.addText("四套系统均配有设计文档：系统设计、临床量表设计、数据异常处理预案、标注规范、ML 迁移方案", {
     x: 0.62, y: 6.66, w: 12.0, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 10.5, color: MUTED,
   });
@@ -982,7 +997,7 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   });
 
   const gaps = [
-    ["跨个体泛化能力不足", "新个体马尔济斯 F1 仅 70%，训练个体达 90%。根因是训练覆盖的犬只个体数太少，品种、体型、运动习惯差异大", "推动狗场采集落地，将训练个体扩至 10 只以上，再以全新个体验证泛化，目标 85%+"],
+    ["个体覆盖不足，泛化未验证", "训练只覆盖 4 只犬。新个体上准确率明显下降、误报增多；补进数据重训后才回升，说明模型仍依赖「见过」", "狗场先加 6 只（1-2 周），跑完再逐步扩；每加一批都用新个体重新检验通用性与鲁棒性"],
     ["松动检测尚未启动", "优先级让位于抓挠识别与皮肤评估；且松动判定边界本身需与产品、兽医对齐才能定义清楚", "与产品、兽医对齐判定标准后启动开发，与未佩戴检测共同构成全天有效佩戴时间统计"],
     ["皮肤评估依赖合成数据", "ML 版仍基于合成数据训练，真实病例样本积累不足；个体基线已落地但仅内部运行，尚未推上线", "持续推动兽医参与评估标注，积累真实数据做二次训练；个体基线跟踪调优后推上线"],
     ["业务理解仍需加深", "对犬只行为的业务语义、兽医临床判断标准的理解，仍主要依赖他人输入，独立判断力有待加强", "主动向兽医与产品请教，系统补充宠物皮肤健康领域知识，减少反复对齐成本"],
@@ -1019,13 +1034,13 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 
   const plans = [
     ["近期", "1-2 个月", [
-      "推动龙岗狗场正式采集落地，训练个体扩至 10 只以上",
+      "推动龙岗狗场正式采集落地，先补 6 只犬并完成一轮泛化检验",
       "数据平台上线 AI 自动标注，加速人工审核效率",
       "个体基线持续调优并推上线，解决 C2 误触发",
       "与产品、兽医对齐活动/睡觉业务边界与松动判定标准",
     ], PURPLE],
     ["中期", "3-6 个月", [
-      "抓挠识别跨个体泛化达到 85%+，模型具备真正通用性",
+      "个体覆盖扩大后，模型在全新犬只上表现稳定，具备推向用户的条件",
       "皮肤健康评估完成真实数据二次训练并上线验证",
       "补齐松动检测，形成完整的全天有效佩戴时间统计",
       "采集规模按 30 → 50 → 70 只分阶段有序扩大",
