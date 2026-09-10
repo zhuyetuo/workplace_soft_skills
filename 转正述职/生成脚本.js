@@ -120,17 +120,25 @@ function badge(slide, x, y, d, text, bg, fg, size) {
   ], {
     x: 1.12, y: 4.4, w: 3.4, h: 0.52, isTextBox: true, margin: 0, fontFace: F,
   });
-  s.addText("算法工程师", {
-    x: 1.14, y: 4.9, w: 3.2, h: 0.3, isTextBox: true, margin: 0,
+  s.addText("用户增长研发部 · 算法工程师", {
+    x: 1.14, y: 4.9, w: 3.4, h: 0.3, isTextBox: true, margin: 0,
     fontFace: F, fontSize: 12, color: PURPLE_LT,
   });
-  s.addText("述职日期", {
-    x: 4.62, y: 4.46, w: 1.6, h: 0.26, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 10, color: PURPLE_LT,
+  s.addText("入职", {
+    x: 4.72, y: 4.42, w: 1.5, h: 0.24, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 9.5, color: PURPLE_MD,
+  });
+  s.addText("2026.04", {
+    x: 4.7, y: 4.64, w: 1.6, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 13, bold: true, color: WHITE,
+  });
+  s.addText("述职", {
+    x: 4.72, y: 4.98, w: 1.5, h: 0.24, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 9.5, color: PURPLE_MD,
   });
   s.addText("2026.10.08", {
-    x: 4.6, y: 4.76, w: 1.7, h: 0.36, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 16, bold: true, color: ORANGE,
+    x: 4.7, y: 5.2, w: 1.7, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 13, bold: true, color: ORANGE,
   });
 
   s.addText("Health Innovation for a Clean & Comfortable Life", {
@@ -154,73 +162,54 @@ function badge(slide, x, y, d, text, bg, fg, size) {
 }
 
 // =====================================================================
-// S3 — 自我介绍 & 岗位职责理解
+// S3 — 岗位职责理解
 // =====================================================================
 {
   const s = pres.addSlide();
   lightBg(s);
-  pageTitle(s, "01  SELF INTRODUCTION", "自我介绍与岗位职责理解");
+  pageTitle(s, "01  MY ROLE", "我怎么理解这个岗位");
 
-  // left: profile
-  card(s, { x: 0.6, y: 1.66, w: 4.5, h: 4.9, fill: PURPLE_DK });
-  s.addText([
-    { text: "Toky", options: { fontSize: 22, bold: true, color: WHITE } },
-    { text: "  朱业拓", options: { fontSize: 14, bold: false, color: PURPLE_LT } },
-  ], {
-    x: 0.92, y: 1.94, w: 3.9, h: 0.62, isTextBox: true, margin: 0, fontFace: F,
-  });
-  s.addText("算法工程师", {
-    x: 0.94, y: 2.46, w: 3.9, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 12.5, color: ORANGE,
-  });
-
-  const facts = [
-    ["所属部门", "用户增长研发部"],
-    ["入职时间", "2026 年 4 月中旬"],
-    ["所属项目", "Wardyn 项目 · 智能宠物项圈"],
-    ["负责方向", "狗的行为识别\n皮肤健康评估\n算法工程与数据平台"],
-  ];
-  let fy = 3.06;
-  facts.forEach(f => {
-    s.addText(f[0], {
-      x: 0.94, y: fy, w: 3.9, h: 0.24, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 10, color: PURPLE_MD,
-    });
-    const lines = f[1].split("\n").length;
-    s.addText(f[1], {
-      x: 0.94, y: fy + 0.24, w: 3.9, h: 0.28 * lines, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 12.5, bold: true, color: WHITE, lineSpacingMultiple: 1.15,
-    });
-    fy += 0.32 + 0.28 * lines;
-  });
-
-  // right: role understanding
-  s.addText("我如何理解这个岗位", {
-    x: 5.42, y: 1.72, w: 7.3, h: 0.34, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 16, bold: true, color: PURPLE_DK,
-  });
-  s.addText("把项圈采到的数据，变成主人能看懂、也能放心的健康结论", {
-    x: 5.44, y: 2.1, w: 7.3, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: F, fontSize: 11, color: MUTED,
+  s.addText("把项圈采到的数据，变成主人能看懂、也能放心的健康结论 —— 这条链路上的四件事都要管", {
+    x: 0.62, y: 1.44, w: 11.9, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: F, fontSize: 12, color: MUTED,
   });
 
   const roles = [
-    ["数据", "从零建立采集与标注流程，数据质量决定算法上限", ORANGE],
-    ["模型", "教会算法识别狗的行为，并据此判断健康状况", PURPLE_MD],
-    ["工程", "把算法做成产品能直接调用的服务，能上线才算数", PURPLE],
-    ["协作", "对接产品、后端、硬件、兽医，推动资源到位", ORANGE_DK],
+    ["数据", "从零建立采集与标注流程", "数据质量决定算法上限", ORANGE],
+    ["模型", "教会算法识别狗的行为", "并据此判断健康状况", PURPLE_MD],
+    ["工程", "把算法做成能直接调用的服务", "能上线才算数", PURPLE],
+    ["协作", "对接产品、后端、硬件、兽医", "推动资源到位", ORANGE_DK],
   ];
   roles.forEach((r, i) => {
-    const y = 2.62 + i * 1.0;
-    card(s, { x: 5.42, y, w: 7.31, h: 0.84, fill: PURPLE_XLT });
-    badge(s, 5.66, y + 0.16, 0.52, r[0], r[2], WHITE, 12);
+    const col = i % 2, row = Math.floor(i / 2);
+    const x = 0.6 + col * 6.19;
+    const y = 1.9 + row * 2.06;
+    card(s, { x, y, w: 5.94, h: 1.88, fill: PURPLE_XLT });
+    s.addShape(pres.ShapeType.roundRect, {
+      x: x + 0.34, y: y + 0.6, w: 1.16, h: 0.56, rectRadius: 0.1, fill: { color: r[3] },
+    });
+    s.addText(r[0], {
+      x: x + 0.34, y: y + 0.6, w: 1.16, h: 0.56, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 16, bold: true, color: onColor(r[3]),
+      align: "center", valign: "middle",
+    });
     s.addText(r[1], {
-      x: 6.36, y: y + 0.14, w: 6.2, h: 0.56, isTextBox: true, margin: 0,
-      fontFace: F, fontSize: 12, color: INK, valign: "middle", lineSpacingMultiple: 1.2,
+      x: x + 1.72, y: y + 0.58, w: 3.9, h: 0.34, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 15, bold: true, color: PURPLE_DK,
+    });
+    s.addText(r[2], {
+      x: x + 1.74, y: y + 0.98, w: 3.9, h: 0.3, isTextBox: true, margin: 0,
+      fontFace: F, fontSize: 11.5, color: MUTED,
     });
   });
+
+  card(s, { x: 0.6, y: 6.16, w: 12.13, h: 0.66, fill: PURPLE_DK });
+  s.addText("算法岗只有我一人，这四件事没人分担，也没人催 —— 能推到哪一步，取决于我主动做到哪一步。", {
+    x: 0.92, y: 6.16, w: 11.5, h: 0.66, isTextBox: true, margin: 0, valign: "middle",
+    fontFace: F, fontSize: 12, color: WHITE,
+  });
   pageNum(s, 2);
-  s.addNotes("我把算法岗理解为四件事的闭环：数据、模型、工程、协作。缺任何一环，算法都落不了地。");
+  s.addNotes("我把这个岗位理解成一条链路上的四件事：数据、模型、工程、协作。数据决定算法的上限，模型是核心，但做不成服务就落不了地，而这些都离不开和产品、后端、硬件、兽医的配合。算法岗只有我一人，这四件事都得自己扛起来。");
 }
 
 // =====================================================================
